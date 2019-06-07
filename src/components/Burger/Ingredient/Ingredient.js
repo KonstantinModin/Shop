@@ -1,5 +1,6 @@
 import React from 'react';
 import './Ingredient.css';
+import PropTypes from 'prop-types';
 
 const Ingredient = ({ type }) => type === 'bread-top' ? (
             <div className="BreadTop">
@@ -9,8 +10,12 @@ const Ingredient = ({ type }) => type === 'bread-top' ? (
         ) : type ? <div className={type === 'bread-bottom' ? 'BreadBottom' : 
                                    type === 'meat' ? 'Meat' : 
                                    type === 'cheese' ? 'Cheese' :
-                                   type === 'salad' ? 'Salad' : 'bacon'}></div> : null
-   
+                                   type === 'salad' ? 'Salad' : 'Bacon'}></div> : null
+Ingredient.propTypes = {
+    type: PropTypes.string.isRequired
+}
+
+export default Ingredient;
 
     // switch (props.type) {
     //     case 'bread-bottom': ingredient = <div className="BreadBottom"></div>;
@@ -31,13 +36,5 @@ const Ingredient = ({ type }) => type === 'bread-top' ? (
     //     case 'bacon': ingredient = <div className="Bacon"></div>;
     //         break;
     //     default: ingredient = null;
-    // }
-    // if ()
-
-
-
-    
     // return ingredient;
-
-
-export default Ingredient;
+    // }

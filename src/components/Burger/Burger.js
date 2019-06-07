@@ -14,6 +14,8 @@ export default class Burger extends Component {
                 <Ingredient type="salad"/>
                 <Ingredient type="meet"/>
                 <Ingredient type="bread-bottom"/>
+                <Ingredient type={125}/>
+                <Ingredient type=""/>
 
             </div>
         )
