@@ -3,21 +3,21 @@ import Ingredient from './Ingredient';
 import './Burger.css';
 
 
-export default class Burger extends Component {
+const Burger = ({ingredients}) => {
 
-    render() {
-        console.log('typeof <Ingredient/> :', <Ingredient/>);
-        return (
-            <div className="Burger">
-                Burger Component
-                <Ingredient type="bread-top"/>
-                <Ingredient type="cheese"/>
-                <Ingredient type="salad"/>
-                <Ingredient type="meet"/>
-                <Ingredient type="bread-bottom"/>
-                
-
-            </div>
-        )
-    }
+    const transformedIngredients = Object.keys(ingredients)
+            .map(igKey => [...Array(ingredients[igKey])]
+            .map((_, i) => <Ingredient key={igKey + i} type={igKey} />
+    ));
+    
+    return (
+        <div className="Burger">
+            Burger Component
+            <Ingredient type="bread-top"/>
+            {transformedIngredients}
+            <Ingredient type="bread-bottom"/>
+        </div>
+    )    
 }
+
+export default Burger
