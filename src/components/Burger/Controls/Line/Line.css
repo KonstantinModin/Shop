@@ -29,8 +29,8 @@
     cursor: not-allowed;
 }
 
-.Label {
-    padding: 10px;
+.Line .Label {
+    /* padding: 10px; */
     font-weight: bold;
     width: 80px;
 }

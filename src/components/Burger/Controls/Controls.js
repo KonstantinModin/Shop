@@ -12,7 +12,8 @@ const controls = [
 const Controls = (props) => {
     return (
         <div className="Controls">
-            {controls.map(ctrl => <Line key={ctrl.label} label={ctrl.label} />)}
+            {controls.map(ctrl => 
+                <Line key={ctrl.label} label={ctrl.label} type={ctrl.type} add={props.ingredientAdded} />)}
         </div>
     )
 }
