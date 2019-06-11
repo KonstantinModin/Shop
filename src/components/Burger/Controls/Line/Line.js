@@ -1,14 +1,14 @@
 import React from 'react';
 import './Line.css';
 
-const Line = (props) => {
+const Line = ({ label, remove, add, disabled}) => {
     return (
         <div className="Line">
-            <div className="Label">{props.label}</div>
-            <button className="Less">Less</button>   
-            <button className="More" onClick={() => props.add(props.type)}>More</button>   
+            <div className="Label">{label}</div>
+            <button className="Less" onClick={remove} disabled={disabled}>Less</button>   
+            <button className="More" onClick={add}>More</button>   
         </div>
     )
 }
 
-export default Line
+export default Line;
