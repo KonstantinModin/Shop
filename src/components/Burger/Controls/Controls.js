@@ -12,13 +12,15 @@ const controls = [
 const Controls = (props) => {
     return (
         <div className="Controls">
-            {controls.map(ctrl => 
+            <div>Current price: <strong>{props.price.toFixed(2)}</strong> Euros</div>
+            {controls.map(({label, type}) => 
                 <Line 
-                    key={ctrl.label} 
-                    label={ctrl.label}                     
-                    add={() => props.ingredientAdded(ctrl.type)}
-                    remove={() => props.ingredientRemoved(ctrl.type)}
-                    disabled={props.disabled[ctrl.type]} />)}
+                    key={label} 
+                    label={label}                     
+                    add={() => props.ingredientAdded(type)}
+                    remove={() => props.ingredientRemoved(type)}
+                    disabled={props.disabled[type]} />)}
+            <button className="OrderButton">Order Now</button>
         </div>
     )
 }
