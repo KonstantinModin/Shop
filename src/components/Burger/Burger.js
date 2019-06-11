@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Ingredient from './Ingredient';
 import './Burger.css';
 
@@ -11,7 +11,8 @@ const Burger = ({ingredients}) => {
             .reduce((a, b) => [...a, ...b], []);
     
     console.log('transformedIngredients :', transformedIngredients);
-    if (transformedIngredients.length === 0) transformedIngredients = <p>Please start adding ingredients!</p>;
+    if (transformedIngredients.length === 0) 
+    transformedIngredients = <p>Please start adding ingredients!</p>;
     
     return (
         <div className="Burger">

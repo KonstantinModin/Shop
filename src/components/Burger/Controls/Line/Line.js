@@ -4,7 +4,7 @@ import './Line.css';
 const Line = (props) => {
     return (
         <div className="Line">
-            <p className="Label">{props.label}</p>
+            <div className="Label">{props.label}</div>
             <button className="Less">Less</button>   
             <button className="More">More</button>   
         </div>
