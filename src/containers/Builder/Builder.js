@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Burger from '../../components/Burger';
 import Controls from '../../components/Burger/Controls';
+import Modal from '../../components/UI/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -43,6 +45,9 @@ export default class Builder extends Component {
 
         return (
             <>
+                <Modal>
+                    <OrderSummary order={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients={this.state.ingredients}/>
                 <Controls
                     ingredientAdded={this.addIngredientHandler}
