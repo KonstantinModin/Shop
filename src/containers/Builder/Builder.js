@@ -38,7 +38,8 @@ export default class Builder extends Component {
     
     render() {
         const disabledInfo = { ...this.state.ingredients};
-        for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0
+        for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
+        const canWeOrder = Object.values(this.state.ingredients).some(i => i > 0);
 
         return (
             <>
@@ -47,7 +48,8 @@ export default class Builder extends Component {
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     disabled={disabledInfo}
-                    price={this.state.totalPrice} />
+                    price={this.state.totalPrice}
+                    canWeOrder={canWeOrder} />
             </>
         )
     }

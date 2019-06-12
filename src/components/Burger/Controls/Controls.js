@@ -20,7 +20,7 @@ const Controls = (props) => {
                     add={() => props.ingredientAdded(type)}
                     remove={() => props.ingredientRemoved(type)}
                     disabled={props.disabled[type]} />)}
-            <button className="OrderButton">Order Now</button>
+            <button className="OrderButton" disabled={!props.canWeOrder}>Order Now</button>
         </div>
     )
 }
