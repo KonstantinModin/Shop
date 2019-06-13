@@ -1,4 +1,5 @@
 .SideDrawer {
+    
     position: fixed;
     width: 280px;
     max-width: 70%;
@@ -18,10 +19,10 @@
     }
 }
 
-.SideDrawer .Open {
+.Open {
     transform: translateX(0);
 }
 
-.SideDrawer .Close {
+.Close {
     transform: translateX(-100%);
 }

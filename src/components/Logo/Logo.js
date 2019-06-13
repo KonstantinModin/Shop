@@ -2,9 +2,9 @@ import React from 'react';
 import image from '../../assets/images/burger-logo.png';
 import './Logo.css';
 
-const Logo = ({height}) => {
+const Logo = ({st}) => {
     return (
-        <div className="Logo" style={{height: height}}>
+        <div className="Logo" style={st}>
             <img src={image} alt="MyBurger"/>            
         </div>
     )
