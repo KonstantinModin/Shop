@@ -15,8 +15,7 @@ const Burger = ({ingredients}) => {
     transformedIngredients = <p>Please start adding ingredients!</p>;
     
     return (
-        <div className="Burger">
-            Burger Component
+        <div className="Burger">            
             <Ingredient type="bread-top"/>
             {transformedIngredients}
             <Ingredient type="bread-bottom"/>

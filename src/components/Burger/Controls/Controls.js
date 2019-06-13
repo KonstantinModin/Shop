@@ -16,11 +16,14 @@ const Controls = (props) => {
             {controls.map(({label, type}) => 
                 <Line 
                     key={label} 
-                    label={label}                     
-                    add={() => props.ingredientAdded(type)}
-                    remove={() => props.ingredientRemoved(type)}
+                    label={label}
+                    type={type}
+                    action={props.ingredientHandler}                    
                     disabled={props.disabled[type]} />)}
-            <button className="OrderButton" disabled={!props.canWeOrder}>Order Now</button>
+            <button 
+                className="OrderButton" 
+                disabled={!props.canWeOrder}
+                onClick={() => props.orderNowButton(true)}>Order Now</button>
         </div>
     )
 }
