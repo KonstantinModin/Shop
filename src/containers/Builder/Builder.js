@@ -28,14 +28,14 @@ export default class Builder extends Component {
         
         const updatedIngredients = {...ingredients};
         updatedIngredients[type] = ingredients[type] + q;
-        if (updatedIngredients[type] > -1) {
+        if (updatedIngredients[type] > - 1) {
             const newPrice = totalPrice + INGREDIENT_PRICES[type] * q;
             this.setState({ingredients: updatedIngredients, totalPrice: newPrice});
         } 
-
     }
     
     orderNowButtonHandler = (newValue) => this.setState({buttonClicked: newValue});
+
     purchaseContinueHandler = () => {
         this.setState({
             ingredients: {
@@ -48,7 +48,6 @@ export default class Builder extends Component {
             buttonClicked: false
         });
         alert('Your order will be ready soon!');
-
     }
     
     render() {
