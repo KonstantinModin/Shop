@@ -3,6 +3,7 @@ import Burger from '../../components/Burger';
 import Controls from '../../components/Burger/Controls';
 import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/';
+import server from '../../axios-orders';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -37,6 +38,20 @@ export default class Builder extends Component {
     orderNowButtonHandler = (newValue) => this.setState({buttonClicked: newValue});
 
     purchaseContinueHandler = () => {
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            date: new Date(),
+            customer: {
+                name: 'Jhon',
+                email: 'test@anytest.de'
+            },
+            deliveryMethod: 'pigeons'
+        };
+        server.post('/orders.json', order)
+            .then(res => console.log('res', res))
+            .catch(err => console.log('err', err));
+
         this.setState({
             ingredients: {
                 salad: 0,
