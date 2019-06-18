@@ -4,6 +4,7 @@ import Controls from '../../components/Burger/Controls';
 import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/';
 import server from '../../axios-orders';
+import Spinner from '../../components/UI/Spinner';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -21,7 +22,8 @@ export default class Builder extends Component {
             meat: 0
         },
         totalPrice: 2,
-        buttonClicked: false
+        buttonClicked: false,
+        loading: false
     }
 
     ingredientHandler = (type, q) => {
@@ -38,6 +40,7 @@ export default class Builder extends Component {
     orderNowButtonHandler = (newValue) => this.setState({buttonClicked: newValue});
 
     purchaseContinueHandler = () => {
+        this.setState({loading: true});
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
@@ -49,8 +52,12 @@ export default class Builder extends Component {
             deliveryMethod: 'pigeons'
         };
         server.post('/orders.json', order)
-            .then(res => console.log('res', res))
-            .catch(err => console.log('err', err));
+            .then(res => {
+                this.setState({loading: false, buttonClicked: false});
+            })
+            .catch(err => {
+                this.setState({loading: false, buttonClicked: false});
+            });
 
         this.setState({
             ingredients: {
@@ -59,10 +66,9 @@ export default class Builder extends Component {
                 cheese: 0,
                 meat: 0
             },
-            totalPrice: 2,
-            buttonClicked: false
+            totalPrice: 2            
         });
-        alert('Your order will be ready soon!');
+        // alert('Your order will be ready soon!');
     }
     
     render() {
@@ -72,14 +78,19 @@ export default class Builder extends Component {
         for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
         const canWeOrder = Object.values(ingredients).some(i => i > 0);
 
+        let orderSummary = <OrderSummary 
+            order={ingredients} 
+            totalP={totalPrice}
+            cancel={() => this.orderNowButtonHandler(false)}
+            makeAdeal={this.purchaseContinueHandler}/>;
+        if (this.state.loading) {
+            orderSummary = <Spinner />
+        }
+
         return (
             <>
                 <Modal show={buttonClicked} modalClosed={() => this.orderNowButtonHandler(false)}>
-                    <OrderSummary 
-                        order={ingredients} 
-                        totalP={totalPrice}
-                        cancel={() => this.orderNowButtonHandler(false)}
-                        makeAdeal={this.purchaseContinueHandler}/>
+                    {orderSummary}
                 </Modal>
                 <Burger ingredients={ingredients}/>
                 <Controls

@@ -7,7 +7,10 @@ export default class Modal extends Component {
         console.log('Modal Did Update');
     }
 
-    shouldComponentUpdate = (nextProps) => this.props.show !== nextProps.show;
+    shouldComponentUpdate = (nextProps) => {
+        // console.log('this.props.children :', this.props.children);
+        return this.props.show !== nextProps.show || (this.props.show && this.props.children !== nextProps.children)
+    };
 
     render(){
         const {show, children, modalClosed} = this.props;            
