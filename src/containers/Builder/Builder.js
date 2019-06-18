@@ -5,6 +5,8 @@ import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/';
 import server from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler';
+import axios from 'axios';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -13,7 +15,7 @@ const INGREDIENT_PRICES = {
     bacon: 0.7
 };
 
-export default class Builder extends Component {
+class Builder extends Component {
     state = {
         ingredients: {
             salad: 0,
@@ -51,7 +53,7 @@ export default class Builder extends Component {
             },
             deliveryMethod: 'pigeons'
         };
-        server.post('/orders.json', order)
+        server.post('/orders', order)
             .then(res => {
                 this.setState({loading: false, buttonClicked: false});
             })
@@ -103,6 +105,8 @@ export default class Builder extends Component {
         )
     }
 }
+
+export default withErrorHandler(Builder, axios);
 
 
 
