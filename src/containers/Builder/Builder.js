@@ -20,15 +20,16 @@ class Builder extends Component {
         ingredients: null,
         totalPrice: 2,
         buttonClicked: false,
-        loading: false
+        loading: false,
+        error: false
     }
 
     componentDidMount() {
-        server.get('https://burger-shop-6267.firebaseio.com/ingredients.jon')
+        server.get('https://burger-shop-6267.firebaseio.com/ingredients.json')
             .then(response => {
                 this.setState({ingredients: response.data});
             })
-            .catch(error => {});
+            .catch(error => this.setState({error: true}));
     }
 
     ingredientHandler = (type, q) => {
@@ -77,14 +78,14 @@ class Builder extends Component {
     }
     
     render() {
-        const { ingredients, buttonClicked, totalPrice } = this.state;
+        const { ingredients, buttonClicked, totalPrice, error } = this.state;
 
         const disabledInfo = { ...ingredients};
         for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
         let canWeOrder = false;
         let orderSummary = null;       
         
-        let burger = <Spinner />;
+        let burger = error ? <h1>Ingredients can't be loaded!</h1> : <Spinner />;
 
         if (this.state.ingredients) {
             canWeOrder = Object.values(ingredients).some(i => i > 0);
