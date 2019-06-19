@@ -10,5 +10,4 @@ const DrawerToggle = ({onClick}) => {
         </div>
     )
 }
-
 export default DrawerToggle;

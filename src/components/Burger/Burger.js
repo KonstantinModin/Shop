@@ -4,7 +4,6 @@ import './Burger.css';
 
 
 const Burger = ({ingredients}) => {
-
     let transformedIngredients = Object.keys(ingredients)
             .map(igKey => [...Array(ingredients[igKey])]
             .map((_, i) => <Ingredient key={igKey + i} type={igKey} />))
@@ -22,5 +21,4 @@ const Burger = ({ingredients}) => {
         </div>
     )    
 }
-
-export default Burger
+export default Burger;
