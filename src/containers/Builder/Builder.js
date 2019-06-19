@@ -17,15 +17,18 @@ const INGREDIENT_PRICES = {
 
 class Builder extends Component {
     state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0,
-            cheese: 0,
-            meat: 0
-        },
+        ingredients: null,
         totalPrice: 2,
         buttonClicked: false,
         loading: false
+    }
+
+    componentDidMount() {
+        server.get('https://burger-shop-6267.firebaseio.com/ingredients.jon')
+            .then(response => {
+                this.setState({ingredients: response.data});
+            })
+            .catch(error => {});
     }
 
     ingredientHandler = (type, q) => {
@@ -78,13 +81,28 @@ class Builder extends Component {
 
         const disabledInfo = { ...ingredients};
         for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
-        const canWeOrder = Object.values(ingredients).some(i => i > 0);
+        let canWeOrder = false;
+        let orderSummary = null;       
+        
+        let burger = <Spinner />;
 
-        let orderSummary = <OrderSummary 
+        if (this.state.ingredients) {
+            canWeOrder = Object.values(ingredients).some(i => i > 0);
+            burger = <>
+                        <Burger ingredients={ingredients}/>
+                        <Controls
+                            ingredientHandler={this.ingredientHandler}                    
+                            disabled={disabledInfo}
+                            price={totalPrice}
+                            canWeOrder={canWeOrder}
+                            orderNowButton={this.orderNowButtonHandler} />
+                    </>;
+            orderSummary = <OrderSummary 
             order={ingredients} 
             totalP={totalPrice}
             cancel={() => this.orderNowButtonHandler(false)}
             makeAdeal={this.purchaseContinueHandler}/>;
+        }
         if (this.state.loading) {
             orderSummary = <Spinner />
         }
@@ -94,13 +112,7 @@ class Builder extends Component {
                 <Modal show={buttonClicked} modalClosed={() => this.orderNowButtonHandler(false)}>
                     {orderSummary}
                 </Modal>
-                <Burger ingredients={ingredients}/>
-                <Controls
-                    ingredientHandler={this.ingredientHandler}                    
-                    disabled={disabledInfo}
-                    price={totalPrice}
-                    canWeOrder={canWeOrder}
-                    orderNowButton={this.orderNowButtonHandler} />
+                {burger}
             </>
         )
     }
