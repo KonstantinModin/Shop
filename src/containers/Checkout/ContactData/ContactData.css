@@ -4,6 +4,14 @@
     text-align: center;
 }
 
+.ContactData input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 150%;
+}
+
+
 @media (min-width: 600px) {
     .ContactData {
         width: 500px;
