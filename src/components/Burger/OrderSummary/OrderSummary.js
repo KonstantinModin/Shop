@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './OrderSummary.css';
 import Button from '../../UI/Button/';
+// import { Link } from 'react-router-dom';
 
 export default class OrderSummary extends Component {
     componentDidUpdate(){
@@ -23,7 +24,9 @@ export default class OrderSummary extends Component {
                 </ul>
                 <p>Continue to Checkout?</p>
                 <Button btnType="Danger" clicked={cancel}>CANCEL</Button>
-                <Button btnType="Success" clicked={makeAdeal}>CONTINUE</Button>    
+                {/* <Link to="/checkout" exact> */}
+                <Button btnType="Success" clicked={makeAdeal}>CONTINUE</Button>
+                {/* </Link>     */}
             </div>
         )
     }

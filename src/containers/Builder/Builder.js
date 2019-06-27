@@ -46,35 +46,36 @@ class Builder extends Component {
     orderNowButtonHandler = (newValue) => this.setState({buttonClicked: newValue});
 
     purchaseContinueHandler = () => {
-        this.setState({loading: true});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            date: new Date(),
-            customer: {
-                name: 'Jhon',
-                email: 'test@anytest.de'
-            },
-            deliveryMethod: 'pigeons'
-        };
-        server.post('/orders.json', order)
-            .then(res => {
-                this.setState({loading: false, buttonClicked: false});
-            })
-            .catch(err => {
-                this.setState({loading: false, buttonClicked: false});
-            });
+        // this.setState({loading: true});
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     date: new Date(),
+        //     customer: {
+        //         name: 'Jhon',
+        //         email: 'test@anytest.de'
+        //     },
+        //     deliveryMethod: 'pigeons'
+        // };
+        // server.post('/orders.json', order)
+        //     .then(res => {
+        //         this.setState({loading: false, buttonClicked: false});
+        //     })
+        //     .catch(err => {
+        //         this.setState({loading: false, buttonClicked: false});
+        //     });
 
-        this.setState({
-            ingredients: {
-                salad: 0,
-                bacon: 0,
-                cheese: 0,
-                meat: 0
-            },
-            totalPrice: 2            
-        });
+        // this.setState({
+        //     ingredients: {
+        //         salad: 0,
+        //         bacon: 0,
+        //         cheese: 0,
+        //         meat: 0
+        //     },
+        //     totalPrice: 2            
+        // });
         // alert('Your order will be ready soon!');
+        this.props.history.push('/checkout', this.state.ingredients);
     }
     
     render() {

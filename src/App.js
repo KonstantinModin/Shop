@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Layout from './components/Layout';
 import Builder from './containers/Builder';
+import Checkout from './containers/Checkout';
+import { Route } from 'react-router-dom';
 
-function App() {
-    const [state, setState] = useState(true);
-
+function App() {    
     return (
     <div className="App">
-        <Layout>
-            <button onClick={() => setState(!state)}>Remove Builder</button>
-            {state && <Builder/>}
+        <Layout>            
+            <Route path="/" exact component={Builder} />
+            <Route path="/checkout" component={Checkout} />
         </Layout>
       
     </div>
