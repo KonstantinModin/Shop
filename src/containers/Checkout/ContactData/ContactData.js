@@ -8,12 +8,55 @@ import './ContactData.css';
 
 class ContactData extends Component {  
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
-        },
+        orderForm: {   
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Enter Your Name'
+                },
+                value: ''
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Enter Your Street'
+                },
+                value: ''
+            },
+            postalCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'number',
+                    placeholder: 'Enter Your Postal Code'
+                },
+                value: ''
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Enter Your Country'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Enter Your E-Mail'
+                },
+                value: ''
+            },       
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: ['Pigeons', 'Horses', 'Rats', 'Mice']
+                },
+                value: ''
+            },
+        },        
         loading: false
     }
 
@@ -41,15 +84,28 @@ class ContactData extends Component {
         
     }
 
+    inputChangedHandler = (event) => {
+        console.log('event.target.value :', event.target.value);
+    }
+
     render() {
+        console.log('this.state.orderForm :', this.state.orderForm);
+        const formElementsArr = Object.entries(this.state.orderForm);
+        console.log('formElementsArr :', formElementsArr);
+
         let form = (
             <>
             <h2>Enter your Contact Data</h2>
                 <form>
-                    <Input inputType="input" type="text" name="name" placeholder="Enter your name" />
-                    <Input inputType="input" type="email" name="email" placeholder="Enter your email" />
-                    <Input inputType="input" type="text" name="street" placeholder="Enter your Street" />
-                    <Input inputType="input" type="text" name="postal" placeholder="Enter your Postal Code" />
+                    {Object.entries(this.state.orderForm).map(([a, b]) => (
+                        <Input 
+                            key={a} 
+                            elementType={b.elementType}
+                            elementConfig={b.elementConfig}
+                            value={b.value}
+                            changed={this.inputChangedHandler} />
+                    ))}
+                    
                     <Button btnType="Success" clicked={this.orderHandler}>Order</Button>
                 </form>
             </>
