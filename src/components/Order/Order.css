@@ -8,10 +8,11 @@
 
 }
 
-.Order span {
+.Order h3 span {
+    text-transform: capitalize;
     border-radius: 6px;
     border: 1px solid red;
-    margin: 0 4px;
-    padding: 4px;
+    margin: 0 6px;
+    padding: 4px 10px;
     background-color: rgb(247, 211, 217);
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Order from '../../components/Order';
 import server from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler';
 import './Orders.css';
 
 const Orders = (props) => {
@@ -27,7 +28,7 @@ const Orders = (props) => {
     //     console.log('state :', state);            
     // });
 
-    let content = <Spinner />;
+    let content = state.loading ? <Spinner /> : null;
     if (state.orders !== null) content = (
         <>
             <h1>Your Orders</h1>
@@ -48,4 +49,4 @@ const Orders = (props) => {
     )    
 }
 
-export default Orders;
+export default withErrorHandler(Orders, server);
