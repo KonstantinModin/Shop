@@ -2,13 +2,14 @@
     margin: 20px auto;
     width: 80%;
     text-align: center;
+    border: 1px solid #ccc;    
 }
 
 .ContactData input {
-    display: block;
+    /* display: block;
     width: 100%;
     margin: 10px 0;
-    font-size: 150%;
+    font-size: 150%; */
 }
 
 
