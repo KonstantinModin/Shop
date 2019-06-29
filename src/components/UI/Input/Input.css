@@ -2,12 +2,15 @@
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    
 }
 
 .InputField Label {
     font-weight: bold;
     display: block;
     margin-bottom: 2px;
+    font-size: 80%;
+    margin: -1px 15px;
 }
 
 .InputElement {
@@ -15,13 +18,19 @@
     border: 1px solid #ccc;
     background-color: white;
     font: inherit;
-    padding: 6px 10px;
-    display: block;
+    /* padding: 6px 10px; */
+    /* display: block; */
     width: 100%;
     box-sizing: border-box;
 }
 
 .InputElement:focus {
     outline: none;
-    background-color: #ccc;
+    background-color: rgb(255, 246, 234);
 }
+
+.Invalid {
+    border: 1px solid red;
+    background-color: #FDA49A;
+}
+

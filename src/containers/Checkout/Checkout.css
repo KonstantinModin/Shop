@@ -1,0 +1,7 @@
+@media (min-width: 500px) {
+    .Checkout {
+        display: flex;
+        justify-content: flex-start; 
+        flex-direction: row; 
+    }
+}

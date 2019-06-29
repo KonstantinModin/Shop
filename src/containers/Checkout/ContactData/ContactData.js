@@ -11,67 +11,107 @@ class ContactData extends Component {
         orderForm: {   
             name: {
                 elementType: 'input',
+                label: 'Your name:',
                 elementConfig: {
                     type: 'text',
                     placeholder: 'Enter Your Name'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                shouldValidate: true,
+                touched: false
+
             },
             street: {
                 elementType: 'input',
+                label: 'Your street:',
                 elementConfig: {
                     type: 'text',
                     placeholder: 'Enter Your Street'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                shouldValidate: true,
+                touched: false
             },
             postalCode: {
                 elementType: 'input',
+                label: 'Your postal code:',
                 elementConfig: {
                     type: 'number',
                     placeholder: 'Enter Your Postal Code'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 6,
+                    maxLength: 6
+                },
+                valid: false,
+                shouldValidate: true,
+                touched: false
             },
             country: {
                 elementType: 'input',
+                label: 'Your country:',
                 elementConfig: {
                     type: 'text',
                     placeholder: 'Enter Your Country'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                shouldValidate: true,
+                touched: false
             },
             email: {
                 elementType: 'input',
+                label: 'Your e-mail:',
                 elementConfig: {
                     type: 'email',
                     placeholder: 'Enter Your E-Mail'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                shouldValidate: true,
+                touched: false
             },       
             deliveryMethod: {
                 elementType: 'select',
+                label: 'Delivery method:',
                 elementConfig: {
-                    options: ['Pigeons', 'Horses', 'Rats', 'Mice']
+                    options: ['Pigeons', 'Horses', 'Rats', 'Mice', 'Ants']
                 },
-                value: ''
+                value: 'Pigeons',
+                shouldValidate: false,
+                touched: false,
+                valid: true
             },
         },        
-        loading: false
+        loading: false,
+        formIsValid: false
     }
 
     orderHandler = (e) => {
-        e.preventDefault();
-        console.log(this.props);
+        e.preventDefault();        
         this.setState({loading: true});
+        
         const order = {
             ingredients: this.props.location.state[0],
             price: this.props.location.state[1],
             date: new Date(),
-            customer: {
-                name: 'Jhon',
-                email: 'test@anytest.de'
-            },
+            customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`),
             deliveryMethod: 'pigeons'
         };
         server.post('/orders.json', order)
@@ -84,35 +124,73 @@ class ContactData extends Component {
         
     }
 
-    inputChangedHandler = (event) => {
-        console.log('event.target.value :', event.target.value);
+    checkValidity({validation, value, shouldValidate}) {
+        if (!shouldValidate) return true;
+        let isValid = true;
+        if (validation.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if (validation.minLength) {
+            isValid = value.length >= validation.minLength && isValid;
+        }
+        if (validation.maxLength) {
+            isValid = value.length <= validation.maxLength && isValid;
+        }
+        return isValid;
+    }
+
+    inputChangedHandler = ({target: {value}}, name) => {
+        // console.log('event.target :', name);
+        const updatedOrderForm = { ...this.state.orderForm};
+        const updatedFormElement = { ...updatedOrderForm[name]};
+        updatedFormElement.value = value;
+        updatedFormElement.touched = true;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement);
+        updatedOrderForm[name] = updatedFormElement;       
+
+        
+        this.setState({orderForm: updatedOrderForm});
+        console.log('this.state from handler', this.state);
+
+        
+    }
+    componentDidUpdate(_, prevState){
+        const formIsValid = Object.entries(this.state.orderForm).every(i => i[1].valid);        
+        if (formIsValid !== prevState.formIsValid) {
+            this.setState({formIsValid: formIsValid});
+        }
     }
 
     render() {
-        console.log('this.state.orderForm :', this.state.orderForm);
-        const formElementsArr = Object.entries(this.state.orderForm);
-        console.log('formElementsArr :', formElementsArr);
-
         let form = (
             <>
             <h2>Enter your Contact Data</h2>
-                <form>
+                <form 
+                    // onSubmit={this.orderHandler}
+                    >
                     {Object.entries(this.state.orderForm).map(([a, b]) => (
-                        <Input 
-                            key={a} 
+                        <Input
+                            key={a}                                 
                             elementType={b.elementType}
                             elementConfig={b.elementConfig}
                             value={b.value}
-                            changed={this.inputChangedHandler} />
-                    ))}
-                    
-                    <Button btnType="Success" clicked={this.orderHandler}>Order</Button>
+                            label={b.label}
+                            invalid={!b.valid}
+                            shouldValidate={b.shouldValidate}
+                            touched={b.touched}
+                            changed={(event) => this.inputChangedHandler(event, a)} />                        
+                    ))}                    
+                    <div className="ButtonDiv">
+                        <Button enabled={this.state.formIsValid} btnType="Success" clicked={this.orderHandler}>Order</Button>
+                    </div>
                 </form>
             </>
         );
         if (this.state.loading) {
             form = <Spinner />
         }
+        console.log('this.state.formIsValid :', this.state.formIsValid);
         return (
             <div className="ContactData">
                 {form}                

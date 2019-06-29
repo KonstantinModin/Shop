@@ -24,7 +24,7 @@ const Checkout = (props) => {
 
     return (
         <div className="Checkout">
-            <CheckoutSummary 
+            <CheckoutSummary  
                 ingredients={ingredients}
                 price={price}
                 checkoutContinued={checkoutContinuedHandler}
