@@ -1,9 +1,9 @@
 import { HANDLE_INGREDIENT, CLEAR_ODER } from './actions';
 const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.7
+    salad: 0.1,
+    cheese: 0.1,
+    meat: 0.3,
+    bacon: 0.2
 };
 
 const initialState = {

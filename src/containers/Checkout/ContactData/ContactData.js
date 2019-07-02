@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { CLEAR_ODER } from '../../../store/actions';
 import './ContactData.css';
 
-
 class ContactData extends Component {  
     state = {
         orderForm: {   
@@ -168,10 +167,8 @@ class ContactData extends Component {
     render() {
         let form = (
             <>
-            <h2>Enter your Contact Data</h2>
-                <form 
-                    // onSubmit={this.orderHandler}
-                    >
+                <h2>Enter your Contact Data</h2>
+                <form>
                     {Object.entries(this.state.orderForm).map(([a, b]) => (
                         <Input
                             key={a}                                 
