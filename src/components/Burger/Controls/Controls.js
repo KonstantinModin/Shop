@@ -9,21 +9,21 @@ const controls = [
     { label: 'Meat', type: 'meat'}
 ]
 
-const Controls = (props) => {
+const Controls = ({ price, ingredientHandler, disabled, canWeOrder, orderNowButton }) => {
     return (
         <div className="Controls">
-            <div>Current price: <strong>{props.price.toFixed(2)}</strong> Euros</div>
+            <div>Current price: <strong>{price.toFixed(2)}</strong> Euros</div>
             {controls.map(({label, type}) => 
                 <Line 
                     key={label} 
                     label={label}
                     type={type}
-                    action={props.ingredientHandler}                    
-                    disabled={props.disabled[type]} />)}
+                    action={ingredientHandler}                    
+                    disabled={disabled[type]} />)}
             <button 
                 className="OrderButton" 
-                disabled={!props.canWeOrder}
-                onClick={() => props.orderNowButton(true)}>Order Now</button>
+                disabled={!canWeOrder}
+                onClick={() => orderNowButton(true)}>Order Now</button>
         </div>
     )
 }

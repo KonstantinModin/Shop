@@ -4,9 +4,10 @@ import Button from '../../UI/Button/';
 // import { Link } from 'react-router-dom';
 
 export default class OrderSummary extends Component {
-    componentDidUpdate(){
-        console.log('[Order summary did update]');
-    }
+    // componentDidUpdate(){
+    //     console.log('[Order summary did update]');
+    // }
+
     render() {
     const {order, totalP, cancel, makeAdeal} = this.props;
 
