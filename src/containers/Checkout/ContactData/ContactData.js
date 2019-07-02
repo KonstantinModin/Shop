@@ -4,6 +4,7 @@ import Spinner from '../../../components/UI/Spinner';
 import server from '../../../axios-orders';
 import Input from '../../../components/UI/Input';
 import { connect } from 'react-redux';
+import { CLEAR_ODER } from '../../../store/actions';
 import './ContactData.css';
 
 
@@ -209,8 +210,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        clearOder: () => dispatch({type: CLEAR_ODER})
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

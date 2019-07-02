@@ -1,4 +1,4 @@
-import { HANDLE_INGREDIENT } from './actions';
+import { HANDLE_INGREDIENT, CLEAR_ODER } from './actions';
 const INGREDIENT_PRICES = {
     salad: 0.5,
     cheese: 0.4,
@@ -26,6 +26,7 @@ const reducer = (state = initialState, {type, payload}) => {
             },
             totalPrice: state.totalPrice + INGREDIENT_PRICES[payload.name]*payload.q
         };
+        case CLEAR_ODER: return initialState;
         default: return state;
     }
 };

@@ -1,1 +1,2 @@
 export const HANDLE_INGREDIENT = 'HANDLE_INGREDIENT';
+export const CLEAR_ODER = 'CLEAR_ODER';
