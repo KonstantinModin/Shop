@@ -10,17 +10,10 @@ import { connect } from 'react-redux';
 import { HANDLE_INGREDIENT } from '../../store/actions';
 
 
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.7
-};
-
 class Builder extends Component {
     state = {
         // ingredients: null,
-        totalPrice: 2,
+        // totalPrice: 2,
         buttonClicked: false,
         loading: false,
         error: false
@@ -45,15 +38,16 @@ class Builder extends Component {
     //     } 
     // }
     
-    orderNowButtonHandler = (newValue) => this.setState({buttonClicked: newValue});
+    orderNowButtonHandler = (value) => this.setState({buttonClicked: value});
 
     purchaseContinueHandler = () => {        
-        this.props.history.push('/checkout', [this.props.ingredients, this.state.totalPrice]);
+        // this.props.history.push('/checkout', [this.props.ingredients, this.props.totalPrice]);
+        this.props.history.push('/checkout');
     }
     
     render() {
-        const { buttonClicked, totalPrice, error } = this.state;
-        const { ingredients } = this.props;
+        const { buttonClicked, error } = this.state;
+        const { ingredients, totalPrice, ingredientHandler } = this.props;
 
         const disabledInfo = { ...ingredients};
         for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
@@ -67,7 +61,7 @@ class Builder extends Component {
             burger = <>
                         <Burger ingredients={ingredients}/>
                         <Controls
-                            ingredientHandler={this.props.ingredientHandler}                    
+                            ingredientHandler={ingredientHandler}                    
                             disabled={disabledInfo}
                             price={totalPrice}
                             canWeOrder={canWeOrder}
@@ -95,7 +89,8 @@ class Builder extends Component {
 }
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients
+        ingredients: state.ingredients,
+        totalPrice: state.totalPrice
     };    
 }
 

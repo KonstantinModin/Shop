@@ -3,6 +3,7 @@ import Button from '../../../components/UI/Button';
 import Spinner from '../../../components/UI/Spinner';
 import server from '../../../axios-orders';
 import Input from '../../../components/UI/Input';
+import { connect } from 'react-redux';
 import './ContactData.css';
 
 
@@ -108,8 +109,8 @@ class ContactData extends Component {
         this.setState({loading: true});
         
         const order = {
-            ingredients: this.props.location.state[0],
-            price: this.props.location.state[1],
+            ingredients: this.props.ingredients,
+            price: this.props.price,
             date: new Date(),
             customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`),
             deliveryMethod: 'pigeons'
@@ -119,6 +120,7 @@ class ContactData extends Component {
             .catch(err => this.setState({loading: false }))
             .then(() => {
                 alert('Your order will be ready soon!');
+                this.props.clearOder(); 
                 this.props.history.push('/');
             });   
         
@@ -198,5 +200,17 @@ class ContactData extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        price: state.totalPrice
+    }
+}
 
-export default ContactData;
+const mapDispatchToProps = dispatch => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);
