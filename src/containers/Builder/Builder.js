@@ -15,18 +15,9 @@ class Builder extends Component {
     state = {
         // ingredients: null,
         // totalPrice: 2,
-        buttonClicked: false,
-        loading: false,
-        error: false
+        buttonClicked: false        
     }
-
-    componentDidMount() {
-        // server.get('https://burger-shop-6267.firebaseio.com/ingredients.json')
-        //     .then(response => {
-        //         this.setState({ingredients: response.data});
-        //     })
-        //     .catch(error => this.setState({error: true}));
-    }
+    
 
     // ingredientHandler = (type, q) => {
     //     const  {ingredients, totalPrice} = this.state;
@@ -74,9 +65,9 @@ class Builder extends Component {
             cancel={() => this.orderNowButtonHandler(false)}
             makeAdeal={this.purchaseContinueHandler}/>;
         }
-        if (this.state.loading) {
-            orderSummary = <Spinner />
-        }
+        // if (this.state.loading) {
+        //     orderSummary = <Spinner />
+        // }
 
         return (
             <>
