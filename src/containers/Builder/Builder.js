@@ -7,7 +7,8 @@ import server from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler';
 import { connect } from 'react-redux';
-import { HANDLE_INGREDIENT } from '../../store/actions';
+
+import { handleIngredient } from '../../store/actions';
 
 
 class Builder extends Component {
@@ -96,7 +97,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        ingredientHandler: (name, q) => dispatch({type: HANDLE_INGREDIENT, payload: {name:name, q:q}})
+        ingredientHandler: (name, q) => dispatch(handleIngredient(name, q))
     }
 }
 

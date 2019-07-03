@@ -4,7 +4,7 @@ import Spinner from '../../../components/UI/Spinner';
 import server from '../../../axios-orders';
 import Input from '../../../components/UI/Input';
 import { connect } from 'react-redux';
-import { CLEAR_ODER } from '../../../store/actions';
+import { CLEAR_ODER } from '../../../store/actions/actionTypes';
 import './ContactData.css';
 
 class ContactData extends Component {  
@@ -51,7 +51,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 6,
+                    minLength: 5,
                     maxLength: 6
                 },
                 valid: false,

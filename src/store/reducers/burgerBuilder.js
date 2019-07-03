@@ -1,4 +1,4 @@
-import { HANDLE_INGREDIENT, CLEAR_ODER } from './actions';
+import { HANDLE_INGREDIENT, CLEAR_ODER } from '../actions/actionTypes';
 const INGREDIENT_PRICES = {
     salad: 0.1,
     cheese: 0.1,
