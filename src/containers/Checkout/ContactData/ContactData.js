@@ -149,20 +149,17 @@ class ContactData extends Component {
         updatedFormElement.value = value;
         updatedFormElement.touched = true;
         updatedFormElement.valid = this.checkValidity(updatedFormElement);
-        updatedOrderForm[name] = updatedFormElement;       
-
+        updatedOrderForm[name] = updatedFormElement;
         
         this.setState({orderForm: updatedOrderForm});
-        console.log('this.state from handler', this.state);
-
-        
+        console.log('this.state from handler', this.state);        
     }
     componentDidUpdate(_, prevState){
         const formIsValid = Object.entries(this.state.orderForm).every(i => i[1].valid);        
         if (formIsValid !== prevState.formIsValid) {
             this.setState({formIsValid: formIsValid});
-        }
-    }
+        };
+    };
 
     render() {
         let form = (

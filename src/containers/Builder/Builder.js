@@ -12,9 +12,7 @@ import { handleIngredient, initIngredient } from '../../store/actions';
 
 
 class Builder extends Component {
-    state = {
-        // ingredients: null,
-        // totalPrice: 2,
+    state = {        
         buttonClicked: false        
     }
 
@@ -99,21 +97,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Builder, server));
-
-
-
-// addIngredientHandler = (type) => {
-//     const updatedIngredients = {...this.state.ingredients};
-//     updatedIngredients[type] = this.state.ingredients[type] + 1;
-//     const newPrice = INGREDIENT_PRICES[type] + this.state.totalPrice;
-//     this.setState({ingredients: updatedIngredients, totalPrice: newPrice});
-// }
-
-// removeIngredientHandler = (type) => {
-//     const updatedIngredients = {...this.state.ingredients};
-//     updatedIngredients[type] = this.state.ingredients[type] - 1;
-//     if (updatedIngredients[type] > -1) {
-//         const newPrice = this.state.totalPrice - INGREDIENT_PRICES[type];
-//         this.setState({ingredients: updatedIngredients, totalPrice: newPrice});
-//     } 
-// }
