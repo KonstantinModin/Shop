@@ -1,4 +1,10 @@
-import { HANDLE_INGREDIENT, CLEAR_ODER, SET_INGREDIENTS, FETCH_INGREDIENTS_FAILED } from '../actions/actionTypes';
+import { 
+    HANDLE_INGREDIENT, 
+    CLEAR_ODER, 
+    SET_INGREDIENTS, 
+    FETCH_INGREDIENTS_FAILED 
+} from '../actions/actionTypes';
+
 const INGREDIENT_PRICES = {
     salad: 0.1,
     cheese: 0.1,
