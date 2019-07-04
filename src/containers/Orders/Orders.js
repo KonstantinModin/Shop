@@ -5,7 +5,7 @@ import Spinner from '../../components/UI/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler';
 import './Orders.css';
 
-const Orders = (props) => {
+const Orders = () => {
     const [state, setState] = useState({orders: null, loading: true});
     
     useEffect(() => {
@@ -22,11 +22,7 @@ const Orders = (props) => {
                 });
             });
 
-        }, []);
-        
-    // useEffect(() => {
-    //     console.log('state :', state);            
-    // });
+        }, []);    
 
     let content = state.loading ? <Spinner /> : null;
     if (state.orders !== null) content = (

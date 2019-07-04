@@ -1,4 +1,10 @@
-import { HANDLE_INGREDIENT, CLEAR_ODER, SET_INGREDIENTS, FETCH_INGREDIENTS_FAILED } from './actionTypes';
+import { 
+    HANDLE_INGREDIENT, 
+    CLEAR_ODER, 
+    SET_INGREDIENTS, 
+    FETCH_INGREDIENTS_FAILED 
+} from './actionTypes';
+
 import server from '../../axios-orders';
 
 export const handleIngredient = (name, q) => {
@@ -14,14 +20,14 @@ const setIngredients = (ingredients) => {
         type: SET_INGREDIENTS,
         payload: ingredients
     }
-}
+};
 
 const fetchIngredientsFailed = (error) => {
     return {
         type: FETCH_INGREDIENTS_FAILED,
         payload: error
     }
-}
+};
 
 export const initIngredient = () => {
     return dispatch => {
@@ -31,4 +37,4 @@ export const initIngredient = () => {
             })
             .catch(error => dispatch(fetchIngredientsFailed(error)));
     }
-}
+};
