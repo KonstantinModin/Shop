@@ -8,7 +8,7 @@ import Spinner from '../../components/UI/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler';
 import { connect } from 'react-redux';
 
-import { handleIngredient } from '../../store/actions';
+import { handleIngredient, initIngredient } from '../../store/actions';
 
 
 class Builder extends Component {
@@ -16,6 +16,10 @@ class Builder extends Component {
         // ingredients: null,
         // totalPrice: 2,
         buttonClicked: false        
+    }
+
+    componentDidMount() {
+        this.props.initIngredient();
     }
     
 
@@ -38,8 +42,8 @@ class Builder extends Component {
     }
     
     render() {
-        const { buttonClicked, error } = this.state;
-        const { ingredients, totalPrice, ingredientHandler } = this.props;
+        const { buttonClicked } = this.state;
+        const { ingredients, totalPrice, ingredientHandler, error } = this.props;
 
         const disabledInfo = { ...ingredients};
         for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
@@ -82,13 +86,15 @@ class Builder extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        totalPrice: state.totalPrice
+        totalPrice: state.totalPrice,
+        error: state.error
     };    
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        ingredientHandler: (name, q) => dispatch(handleIngredient(name, q))
+        ingredientHandler: (name, q) => dispatch(handleIngredient(name, q)),
+        initIngredient: () => dispatch(initIngredient())
     }
 }
 
