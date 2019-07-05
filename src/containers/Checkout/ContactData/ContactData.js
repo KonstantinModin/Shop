@@ -4,7 +4,8 @@ import Spinner from '../../../components/UI/Spinner';
 import server from '../../../axios-orders';
 import Input from '../../../components/UI/Input';
 import { connect } from 'react-redux';
-import { initIngredient } from '../../../store/actions';
+import { initIngredient, purchaseBurgerStart } from '../../../store/actions';
+import withErrorHandler from '../../../hoc/withErrorHandler';
 import './ContactData.css';
 
 class ContactData extends Component {  
@@ -106,7 +107,7 @@ class ContactData extends Component {
 
     orderHandler = (e) => {
         e.preventDefault();        
-        this.setState({loading: true});
+        // this.setState({loading: true});
         
         const order = {
             ingredients: this.props.ingredients,
@@ -115,14 +116,15 @@ class ContactData extends Component {
             customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`),
             deliveryMethod: 'pigeons'
         };
-        server.post('/orders.json', order)
-            .then(res => this.setState({loading: false }))
-            .catch(err => this.setState({loading: false }))
-            .then(() => {
-                alert('Your order will be ready soon!');
-                this.props.initIngredient(); 
-                this.props.history.push('/');
-            });   
+        this.props.onOrderBurger(order);
+        // server.post('/orders.json', order)
+        //     .then(res => this.setState({loading: false }))
+        //     .catch(err => this.setState({loading: false }))
+        //     .then(() => {
+        //         alert('Your order will be ready soon!');
+        //         this.props.initIngredient(); 
+        //         this.props.history.push('/');
+        //     });   
         
     }
 
@@ -204,8 +206,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        onOrderBurger: (data) => dispatch(purchaseBurgerStart(data)),
         initIngredient: () => dispatch(initIngredient())
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, server));

@@ -1,4 +1,5 @@
 import { PURCHASE_BURGER_FAIL, PURCHASE_BURGER_SUCCESS } from './actionTypes';
+import server from '../../axios-orders';
 
 export const purchaseBurgerSuccess = (id, data) => {
     return {
@@ -19,3 +20,10 @@ export const purchaseBurgerFail = (error) => {
     };
 };
 
+export const purchaseBurgerStart = (data) => {
+    return dispatch => {
+        server.post('/orders.json', data)
+            .then(res => dispatch(purchaseBurgerSuccess(res.data, data)))
+            .catch(err => dispatch(purchaseBurgerFail(err)));
+    }
+}
