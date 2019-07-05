@@ -4,7 +4,7 @@ import Spinner from '../../../components/UI/Spinner';
 import server from '../../../axios-orders';
 import Input from '../../../components/UI/Input';
 import { connect } from 'react-redux';
-import { initIngredient, purchaseBurgerStart } from '../../../store/actions';
+import { initIngredient, purchaseBurger } from '../../../store/actions';
 import withErrorHandler from '../../../hoc/withErrorHandler';
 import './ContactData.css';
 
@@ -70,8 +70,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false,
-                shouldValidate: true,
+                valid: true,
+                shouldValidate: false,
                 touched: false
             },
             email: {
@@ -101,7 +101,7 @@ class ContactData extends Component {
                 valid: true
             },
         },        
-        loading: false,
+        // loading: false,
         formIsValid: false
     }
 
@@ -116,7 +116,10 @@ class ContactData extends Component {
             customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`),
             deliveryMethod: 'pigeons'
         };
-        this.props.onOrderBurger(order);
+        const init = this.props.initIngredient;
+        const pus = this.props.history.push;
+
+        this.props.onOrderBurger(order, this.goToBegin, init, pus);
         // server.post('/orders.json', order)
         //     .then(res => this.setState({loading: false }))
         //     .catch(err => this.setState({loading: false }))
@@ -186,7 +189,7 @@ class ContactData extends Component {
                 </form>
             </>
         );
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner />
         }
         console.log('this.state.formIsValid :', this.state.formIsValid);
@@ -199,14 +202,15 @@ class ContactData extends Component {
 }
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice
+        ingredients: state.builder.ingredients,
+        price: state.builder.totalPrice,
+        loading: state.order.loading
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (data) => dispatch(purchaseBurgerStart(data)),
+        onOrderBurger: (data) => dispatch(purchaseBurger(data)),
         initIngredient: () => dispatch(initIngredient())
     }
 }

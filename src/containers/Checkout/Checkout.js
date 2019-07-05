@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary';
 import ContactData from './ContactData';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Checkout.css';
 
@@ -23,22 +23,26 @@ const Checkout = (props) => {
         console.log('ingredients in checkout from Redux :', ingredients);        
     });
 
-    return (
-        <div className="Checkout">
-            <CheckoutSummary  
-                ingredients={ingredients}
-                price={price}
-                checkoutContinued={checkoutContinuedHandler}
-                checkoutCancelled={checkoutCancelledHandler} />
-            <Route path={path + '/contact-data'} component={ContactData} />
-        </div>
-    )
+    let summary = <Redirect to="/" />;
+    if (props.ingredients) {
+        summary = (
+            <div className="Checkout">
+                <CheckoutSummary  
+                    ingredients={ingredients}
+                    price={price}
+                    checkoutContinued={checkoutContinuedHandler}
+                    checkoutCancelled={checkoutCancelledHandler} />
+                <Route path={path + '/contact-data'} component={ContactData} />
+            </div>
+        )
+    }
+    return summary
 }
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice
+        ingredients: state.builder.ingredients,
+        price: state.builder.totalPrice
     }
 }
 

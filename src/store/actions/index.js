@@ -1,3 +1,3 @@
-export { handleIngredient, clearOder, initIngredient } from './burgerBuilder';
+export { handleIngredient, clearOder, initIngredient  } from './burgerBuilder';
 
-export { purchaseBurgerStart } from './order';
+export { purchaseBurger, purchaseInit } from './order';
