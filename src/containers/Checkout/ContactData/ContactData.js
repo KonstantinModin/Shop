@@ -4,7 +4,7 @@ import Spinner from '../../../components/UI/Spinner';
 import server from '../../../axios-orders';
 import Input from '../../../components/UI/Input';
 import { connect } from 'react-redux';
-import { CLEAR_ODER } from '../../../store/actions/actionTypes';
+import { initIngredient } from '../../../store/actions';
 import './ContactData.css';
 
 class ContactData extends Component {  
@@ -120,7 +120,7 @@ class ContactData extends Component {
             .catch(err => this.setState({loading: false }))
             .then(() => {
                 alert('Your order will be ready soon!');
-                this.props.clearOder(); 
+                this.props.initIngredient(); 
                 this.props.history.push('/');
             });   
         
@@ -204,7 +204,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        clearOder: () => dispatch({type: CLEAR_ODER})
+        initIngredient: () => dispatch(initIngredient())
     }
 }
 

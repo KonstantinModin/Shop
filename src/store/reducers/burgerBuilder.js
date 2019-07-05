@@ -22,7 +22,13 @@ const reducer = (state = initialState, {type, payload}) => {
     switch(type) {
         case SET_INGREDIENTS: return {
             ...state,
-            ingredients: payload,
+            ingredients: {
+                salad: payload.salad,
+                bacon: payload.bacon,
+                cheese: payload.cheese,
+                meat: payload.meat
+            },
+            totalPrice: 2,
             error: false
         };
         case FETCH_INGREDIENTS_FAILED: return {
