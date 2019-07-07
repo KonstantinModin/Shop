@@ -7,9 +7,7 @@ import './Checkout.css';
 
 const Checkout = (props) => {    
     const { ingredients, price, match: {path}} = props;
-    // const ingredients = Object.assign({}, props.location.state[0]);
-    // const price = props.location.state[1];
-
+    
     const checkoutCancelledHandler = () => {
         props.history.goBack();
     }

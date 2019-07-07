@@ -9,6 +9,7 @@ import withErrorHandler from '../../hoc/withErrorHandler';
 import { connect } from 'react-redux';
 
 import { handleIngredient, initIngredient } from '../../store/actions';
+import { purchaseInit } from '../../store/actions';
 
 
 class Builder extends Component {
@@ -18,6 +19,7 @@ class Builder extends Component {
 
     componentDidMount() {
         this.props.initIngredient();
+        this.props.purchaseInit();
     }
     
 
@@ -92,7 +94,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         ingredientHandler: (name, q) => dispatch(handleIngredient(name, q)),
-        initIngredient: () => dispatch(initIngredient())
+        initIngredient: () => dispatch(initIngredient()),
+        purchaseInit: () => dispatch(purchaseInit())
     }
 }
 

@@ -1,6 +1,5 @@
 import { 
-    HANDLE_INGREDIENT, 
-    CLEAR_ODER, 
+    HANDLE_INGREDIENT,     
     SET_INGREDIENTS, 
     FETCH_INGREDIENTS_FAILED 
 } from './actionTypes';
@@ -11,9 +10,9 @@ export const handleIngredient = (name, q) => {
     return {type: HANDLE_INGREDIENT, payload: {name:name, q:q}};
 };
 
-export const clearOder = () => {
-    return {type: CLEAR_ODER};
-};
+// export const clearOder = () => {
+//     return {type: CLEAR_ODER};
+// };
 
 const setIngredients = (ingredients) => {
     return {

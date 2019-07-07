@@ -4,7 +4,7 @@ import Spinner from '../../../components/UI/Spinner';
 import server from '../../../axios-orders';
 import Input from '../../../components/UI/Input';
 import { connect } from 'react-redux';
-import { initIngredient, purchaseBurger } from '../../../store/actions';
+import { purchaseBurger } from '../../../store/actions';
 import withErrorHandler from '../../../hoc/withErrorHandler';
 import './ContactData.css';
 
@@ -115,19 +115,9 @@ class ContactData extends Component {
             date: new Date(),
             customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`),
             deliveryMethod: 'pigeons'
-        };
-        const init = this.props.initIngredient;
-        const pus = this.props.history.push;
+        };      
 
-        this.props.onOrderBurger(order, this.goToBegin, init, pus);
-        // server.post('/orders.json', order)
-        //     .then(res => this.setState({loading: false }))
-        //     .catch(err => this.setState({loading: false }))
-        //     .then(() => {
-        //         alert('Your order will be ready soon!');
-        //         this.props.initIngredient(); 
-        //         this.props.history.push('/');
-        //     });   
+        this.props.onOrderBurger(order);     
         
     }
 
@@ -147,8 +137,7 @@ class ContactData extends Component {
         return isValid;
     }
 
-    inputChangedHandler = ({target: {value}}, name) => {
-        // console.log('event.target :', name);
+    inputChangedHandler = ({target: {value}}, name) => {        
         const updatedOrderForm = { ...this.state.orderForm};
         const updatedFormElement = { ...updatedOrderForm[name]};
         updatedFormElement.value = value;
@@ -157,13 +146,15 @@ class ContactData extends Component {
         updatedOrderForm[name] = updatedFormElement;
         
         this.setState({orderForm: updatedOrderForm});
-        console.log('this.state from handler', this.state);        
+        // console.log('this.state from handler', this.state);        
     }
     componentDidUpdate(_, prevState){
         const formIsValid = Object.entries(this.state.orderForm).every(i => i[1].valid);        
         if (formIsValid !== prevState.formIsValid) {
             this.setState({formIsValid: formIsValid});
         };
+
+        if (this.props.purchased) this.props.history.replace('/');
     };
 
     render() {
@@ -192,7 +183,7 @@ class ContactData extends Component {
         if (this.props.loading) {
             form = <Spinner />
         }
-        console.log('this.state.formIsValid :', this.state.formIsValid);
+        // console.log('this.state.formIsValid :', this.state.formIsValid);
         return (
             <div className="ContactData">
                 {form}                
@@ -204,14 +195,14 @@ const mapStateToProps = state => {
     return {
         ingredients: state.builder.ingredients,
         price: state.builder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        purchased: state.order.purchased
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (data) => dispatch(purchaseBurger(data)),
-        initIngredient: () => dispatch(initIngredient())
+        onOrderBurger: (data) => dispatch(purchaseBurger(data))        
     }
 }
 

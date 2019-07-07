@@ -2,7 +2,10 @@ import {
     PURCHASE_BURGER_FAIL, 
     PURCHASE_BURGER_SUCCESS, 
     PURCHASE_BURGER_START,
-    PURCHASE_INIT
+    PURCHASE_INIT,
+    FETCH_ORDERS_SUCCESS,
+    FETCH_ORDERS_FAIL,
+    FETCH_ORDERS_START
 } from './actionTypes';
 
 import server from '../../axios-orders';
@@ -53,3 +56,35 @@ export const purchaseInit = () => {
         type: PURCHASE_INIT
     }
 };
+
+const fetchOrdersSuccess = (orders) => {
+    return {
+        type: FETCH_ORDERS_SUCCESS,
+        payload: orders
+    }
+};
+
+const fetchOrdersFail = (error) => {
+    return {
+        type: FETCH_ORDERS_FAIL,
+        payload: error
+    }
+};
+
+export const fetchOrdersStart = () => {
+    return {
+        type: FETCH_ORDERS_START
+    }
+};
+
+export const fetchOrders = () => {
+    return dispatch => {
+        dispatch(fetchOrdersStart());
+        server.get('/orders.json')
+        .then(response => {
+            console.log('response.data :', response.data);
+            dispatch(fetchOrdersSuccess(Object.entries(response.data)))
+        })
+        .catch(error => dispatch(fetchOrdersFail(error)));
+    }
+}

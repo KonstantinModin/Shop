@@ -1,9 +1,10 @@
 import { 
-    HANDLE_INGREDIENT, 
-    CLEAR_ODER, 
+    HANDLE_INGREDIENT,      
     SET_INGREDIENTS, 
     FETCH_INGREDIENTS_FAILED 
 } from '../actions/actionTypes';
+
+import { updateObject } from "../utility";
 
 const INGREDIENT_PRICES = {
     salad: 0.1,
@@ -20,30 +21,23 @@ const initialState = {
 
 const reducer = (state = initialState, {type, payload}) => {
     switch(type) {
-        case SET_INGREDIENTS: return {
-            ...state,
-            ingredients: {
+        case SET_INGREDIENTS: return updateObject(state,
+            {ingredients: {
                 salad: payload.salad,
                 bacon: payload.bacon,
                 cheese: payload.cheese,
                 meat: payload.meat
             },
             totalPrice: 2,
-            error: false
-        };
-        case FETCH_INGREDIENTS_FAILED: return {
-            ...state,
-            error: true
-        }
-        case HANDLE_INGREDIENT: return {
-            ...state,
-            ingredients: {
-                ...state.ingredients,
-                [payload.name]: state.ingredients[payload.name] + payload.q
-            },
-            totalPrice: state.totalPrice + INGREDIENT_PRICES[payload.name]*payload.q
-        };        
-        case CLEAR_ODER: return initialState;
+            error: false});
+            
+        case FETCH_INGREDIENTS_FAILED: return updateObject(state, {error: true});
+
+        case HANDLE_INGREDIENT: return updateObject(state,
+            {ingredients: updateObject(state.ingredients,
+                {[payload.name]: state.ingredients[payload.name] + payload.q}),
+            totalPrice: state.totalPrice + INGREDIENT_PRICES[payload.name] * payload.q});        
+        
         default: return state;
     }
 };
