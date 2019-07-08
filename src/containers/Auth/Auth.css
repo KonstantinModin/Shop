@@ -1,0 +1,28 @@
+.Auth {
+    margin: 20px auto;
+    width: 80%;
+    /* text-align: center; */
+    border: 1px solid #ccc;
+   
+}
+
+.Auth h2 {
+    text-align: center;
+}
+
+.Auth .ButtonDiv button {
+    margin: 20px 0;
+    /* align-items: center; */
+}
+
+.Auth .ButtonDiv {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 600px) {
+    .Auth {
+        width: 500px;
+    }
+}
