@@ -1,9 +1,7 @@
 .Auth {
     margin: 20px auto;
-    width: 80%;
-    /* text-align: center; */
-    border: 1px solid #ccc;
-   
+    width: 80%;   
+    border: 1px solid #ccc;   
 }
 
 .Auth h2 {
