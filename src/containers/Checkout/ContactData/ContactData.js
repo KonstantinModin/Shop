@@ -106,8 +106,7 @@ class ContactData extends Component {
     }
 
     orderHandler = (e) => {
-        e.preventDefault();        
-        // this.setState({loading: true});
+        e.preventDefault();
         
         const order = {
             ingredients: this.props.ingredients,
@@ -115,10 +114,8 @@ class ContactData extends Component {
             date: new Date(),
             customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`),
             deliveryMethod: 'pigeons'
-        };      
-
-        this.props.onOrderBurger(order);     
-        
+        };
+        this.props.onOrderBurger(order);        
     }
 
     checkValidity({validation, value, shouldValidate}) {
@@ -145,9 +142,9 @@ class ContactData extends Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement);
         updatedOrderForm[name] = updatedFormElement;
         
-        this.setState({orderForm: updatedOrderForm});
-        // console.log('this.state from handler', this.state);        
+        this.setState({orderForm: updatedOrderForm});              
     }
+    
     componentDidUpdate(_, prevState){
         const formIsValid = Object.entries(this.state.orderForm).every(i => i[1].valid);        
         if (formIsValid !== prevState.formIsValid) {
