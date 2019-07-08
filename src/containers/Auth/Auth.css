@@ -9,12 +9,10 @@
 }
 
 .Auth .ButtonDiv button {
-    margin: 20px 0;
-    /* align-items: center; */
+    margin: 20px 0;    
 }
 
-.Auth .ButtonDiv {
-    /* border: 1px solid black; */
+.Auth .ButtonDiv {    
     display: flex;
     justify-content: center;
 }
