@@ -34,7 +34,7 @@ class Auth extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 5
+                    minLength: 6
                 },
                 valid: false,
                 shouldValidate: true,
@@ -81,12 +81,18 @@ class Auth extends Component {
             this.setState({formIsValid: formIsValid});
         };        
     };
+
+    submitHandler = (event) => {
+        const {email, password } = this.state.controls;
+        event.preventDefault();
+        this.props.onAuth(email.value, password.value);
+    }
     
     render() {
         console.log('this.state.formIsValid :', this.state.formIsValid);
         return (
             <div className="Auth">
-                <form>
+                <form onSubmit={this.submitHandler}>
                     {Object.entries(this.state.controls).map(([a, b]) => (
                             <Input
                                 key={a}                                 
@@ -101,8 +107,8 @@ class Auth extends Component {
                         ))}                    
                         <div className="ButtonDiv">
                             <Button enabled={this.state.formIsValid} btnType="Success" clicked={this.orderHandler}>Submit</Button>
+                            <Button btnType="Danger">SWITCH TO SIGNIN</Button>
                         </div>
-
                 </form>
             </div>
         )
