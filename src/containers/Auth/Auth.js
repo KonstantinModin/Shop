@@ -41,7 +41,8 @@ class Auth extends Component {
                 touched: false
             }
         },
-        formIsValid: false
+        formIsValid: false,
+        isSignup: true
     }
 
     checkValidity({validation, value, shouldValidate}) {        
@@ -83,15 +84,23 @@ class Auth extends Component {
     };
 
     submitHandler = (event) => {
-        const {email, password } = this.state.controls;
+        const {isSignup, controls: {email, password }} = this.state;
         event.preventDefault();
-        this.props.onAuth(email.value, password.value);
+        this.props.onAuth(email.value, password.value, isSignup);
     }
+
+    switchAuthModeHandler = (event) => {
+        event.preventDefault();
+        this.setState(state => {
+            return {isSignup: !state.isSignup}
+        })
+    };
     
     render() {
-        console.log('this.state.formIsValid :', this.state.formIsValid);
+        // console.log('this.state.formIsValid :', this.state.formIsValid);
         return (
             <div className="Auth">
+                <h2>{this.state.isSignup.toString()}</h2>
                 <form onSubmit={this.submitHandler}>
                     {Object.entries(this.state.controls).map(([a, b]) => (
                             <Input
@@ -107,7 +116,10 @@ class Auth extends Component {
                         ))}                    
                         <div className="ButtonDiv">
                             <Button enabled={this.state.formIsValid} btnType="Success" clicked={this.orderHandler}>Submit</Button>
-                            <Button btnType="Danger">SWITCH TO SIGNIN</Button>
+                            <Button 
+                                btnType="Danger" 
+                                clicked={this.switchAuthModeHandler}
+                                >SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}</Button>
                         </div>
                 </form>
             </div>
@@ -117,7 +129,7 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(auth(email, password))
+        onAuth: (email, password, isSignup) => dispatch(auth(email, password, isSignup))
     }
 }
 
