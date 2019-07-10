@@ -35,16 +35,16 @@ const purchaseBurgerStart = () => {
     };
 };
 
-export const purchaseBurger = (data, init, pus) => {
+export const purchaseBurger = (data, token) => {
     return dispatch => {
         dispatch(purchaseBurgerStart());
-        server.post('/orders.json', data)
+        server.post('/orders.json?auth=' + token, data)
             .then(res => {
                 dispatch(purchaseBurgerSuccess(res.data.name, data));
-                console.log(init, pus);
-                console.log('posted: :', res);
-                init();
-                pus('/');
+                // console.log(init, pus);
+                // console.log('posted: :', res);
+                // init();
+                // pus('/');
                 
             })           
             .catch(err => dispatch(purchaseBurgerFail(err)));
@@ -77,10 +77,10 @@ export const fetchOrdersStart = () => {
     }
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
-        server.get('/orders.json')
+        server.get('/orders.json?auth=' + token)
         .then(response => {
             console.log('response.data :', response.data);
             dispatch(fetchOrdersSuccess(Object.entries(response.data)))

@@ -115,7 +115,7 @@ class ContactData extends Component {
             customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`),
             deliveryMethod: 'pigeons'
         };
-        this.props.onOrderBurger(order);        
+        this.props.onOrderBurger(order, this.props.token);        
     }
 
     checkValidity({validation, value, shouldValidate}) {
@@ -193,13 +193,14 @@ const mapStateToProps = state => {
         ingredients: state.builder.ingredients,
         price: state.builder.totalPrice,
         loading: state.order.loading,
-        purchased: state.order.purchased
+        purchased: state.order.purchased,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (data) => dispatch(purchaseBurger(data))        
+        onOrderBurger: (data, token) => dispatch(purchaseBurger(data, token))        
     }
 }
 

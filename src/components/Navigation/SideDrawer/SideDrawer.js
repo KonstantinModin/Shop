@@ -12,7 +12,7 @@ const SideDrawer = (props) => {
             <div className={classes}>
                 <Logo st={{height: '11%'}}/>
                 <nav>
-                    <NavigationItems />
+                    <NavigationItems isAuth={props.isAuth}/>
                 </nav>
             </div>
         </>
@@ -20,5 +20,3 @@ const SideDrawer = (props) => {
 }
 
 export default SideDrawer;
-
-// , alignItems: 'center'

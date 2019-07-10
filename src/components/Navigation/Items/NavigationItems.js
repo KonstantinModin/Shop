@@ -2,12 +2,13 @@ import React from 'react';
 import './NavigationItems.css';
 import { NavLink } from 'react-router-dom';
 
-const NavigationItems = () => {    
+const NavigationItems = ({ isAuth }) => {    
     return (
         <nav className="NavigationItems">
-           <NavLink to="/" exact >Burger Builder</NavLink> 
-           <NavLink to="/orders">Orders</NavLink> 
-           <NavLink to="/auth">Auth</NavLink> 
+            <NavLink to="/" exact >Burger Builder</NavLink> 
+            <NavLink to="/orders">Orders</NavLink> 
+            {!isAuth ? <NavLink to="/auth">Auth</NavLink> : 
+                <NavLink to="/logout">Logout</NavLink>} 
         </nav>
     )
 }
