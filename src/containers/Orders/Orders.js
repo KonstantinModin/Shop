@@ -50,17 +50,20 @@ const Orders = (props) => {
             {content}
         </div>
     )    
-}
+};
+
 const mapStateToProps = state => {
     return {
         orders: state.order.orders,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token
     }
-}
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         onFetchOrders: () => dispatch(fetchOrders())
     }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, server));
