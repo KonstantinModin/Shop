@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
+import Spinner from '../../components/UI/Spinner';
 import { auth } from '../../store/actions';
 import './Auth.css';
 
@@ -97,11 +98,8 @@ class Auth extends Component {
     };
     
     render() {
-        // console.log('this.state.formIsValid :', this.state.formIsValid);
-        return (
-            <div className="Auth">
-                <h2>{this.state.isSignup.toString()}</h2>
-                <form onSubmit={this.submitHandler}>
+        let form = (
+            <form onSubmit={this.submitHandler}>
                     {Object.entries(this.state.controls).map(([a, b]) => (
                             <Input
                                 key={a}                                 
@@ -122,8 +120,29 @@ class Auth extends Component {
                                 >SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}</Button>
                         </div>
                 </form>
+        )
+        if (this.props.loading) {
+            form = <Spinner />
+        }
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = <h2>{this.props.error.message.split`_`.join` `}</h2>
+        }
+        
+        return (
+            <div className="Auth">
+                <h2>{this.state.isSignup.toString()}</h2>
+                {errorMessage}
+                {form}
             </div>
         )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error
     }
 }
 
@@ -133,5 +152,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

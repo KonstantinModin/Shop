@@ -14,7 +14,10 @@ export const authStart = () => {
 export const authSuccess = (data) => {
     return {
         type: AUTH_SUCCESS,
-        payload: data
+        payload: {
+            idToken: data.idToken,
+            userId: data.localId
+        }
     };
 };
 
@@ -44,8 +47,8 @@ export const auth = (email, password, isSignup) => {
             dispatch(authSuccess(response.data))
         })
         .catch(error => {
-            console.log('error :', error);
-            dispatch(authFail(error));
+            console.log('error :', error.response);
+            dispatch(authFail(error.response.data.error));
         });
     }
 }
