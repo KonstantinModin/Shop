@@ -1,7 +1,8 @@
 import {
     AUTH_START,
     AUTH_SUCCESS,
-    AUTH_FAIL
+    AUTH_FAIL,
+    AUTH_LOGOUT
 } from './actionTypes';
 import axios from 'axios';
 
@@ -28,6 +29,18 @@ export const authFail = (error) => {
     };
 };
 
+const logout = () => {
+    return {
+        type: AUTH_LOGOUT
+    };
+};
+
+const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {dispatch(logout())}, expirationTime)
+    };
+};
+
 export const auth = (email, password, isSignup) => {
     const key = 'AIzaSyCwToRAdwhUS9yZK67hNMtpRs11S37mJ9U';
     return dispatch => {
@@ -44,7 +57,8 @@ export const auth = (email, password, isSignup) => {
         axios.post(url, authData)
         .then(response => {
             console.log('response', response);
-            dispatch(authSuccess(response.data))
+            dispatch(authSuccess(response.data));
+            dispatch(checkAuthTimeout(response.data.expiresIn));
         })
         .catch(error => {
             console.log('error :', error.response);
