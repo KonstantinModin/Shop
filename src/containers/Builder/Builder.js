@@ -21,19 +21,7 @@ class Builder extends Component {
         this.props.initIngredient();
         this.props.purchaseInit();
     }
-    
 
-    // ingredientHandler = (type, q) => {
-    //     const  {ingredients, totalPrice} = this.state;
-        
-    //     const updatedIngredients = {...ingredients};
-    //     updatedIngredients[type] = ingredients[type] + q;
-    //     if (updatedIngredients[type] > - 1) {
-    //         const newPrice = totalPrice + INGREDIENT_PRICES[type] * q;
-    //         this.setState({ingredients: updatedIngredients, totalPrice: newPrice});
-    //     } 
-    // }
-    
     orderNowButtonHandler = (value) => {
         if (this.props.isAuth) {
             this.setState({buttonClicked: value});
@@ -110,3 +98,16 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Builder, server));
+
+
+
+// ingredientHandler = (type, q) => {
+//     const  {ingredients, totalPrice} = this.state;
+    
+//     const updatedIngredients = {...ingredients};
+//     updatedIngredients[type] = ingredients[type] + q;
+//     if (updatedIngredients[type] > - 1) {
+//         const newPrice = totalPrice + INGREDIENT_PRICES[type] * q;
+//         this.setState({ingredients: updatedIngredients, totalPrice: newPrice});
+//     } 
+// }
