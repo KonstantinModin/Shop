@@ -8,7 +8,7 @@ import Spinner from '../../components/UI/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler';
 import { connect } from 'react-redux';
 
-import { handleIngredient, initIngredient } from '../../store/actions';
+import { handleIngredient, initIngredient, setAuthRedirectPath } from '../../store/actions';
 import { purchaseInit } from '../../store/actions';
 
 
@@ -34,7 +34,14 @@ class Builder extends Component {
     //     } 
     // }
     
-    orderNowButtonHandler = (value) => this.setState({buttonClicked: value});
+    orderNowButtonHandler = (value) => {
+        if (this.props.isAuth) {
+            this.setState({buttonClicked: value});
+        } else {
+            this.props.onSetAuthRedirectPath('/checkout');
+            this.props.history.push('/auth');
+        }
+    };
 
     purchaseContinueHandler = () => {        
         // this.props.history.push('/checkout', [this.props.ingredients, this.props.totalPrice]);
@@ -43,7 +50,7 @@ class Builder extends Component {
     
     render() {
         const { buttonClicked } = this.state;
-        const { ingredients, totalPrice, ingredientHandler, error } = this.props;
+        const { ingredients, totalPrice, ingredientHandler, error, isAuth } = this.props;
 
         const disabledInfo = { ...ingredients};
         for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
@@ -61,7 +68,8 @@ class Builder extends Component {
                             disabled={disabledInfo}
                             price={totalPrice}
                             canWeOrder={canWeOrder}
-                            orderNowButton={this.orderNowButtonHandler} />
+                            orderNowButton={this.orderNowButtonHandler}
+                            isAuth={isAuth} />
                     </>;
             orderSummary = <OrderSummary 
             order={ingredients} 
@@ -87,7 +95,8 @@ const mapStateToProps = state => {
     return {
         ingredients: state.builder.ingredients,
         totalPrice: state.builder.totalPrice,
-        error: state.builder.error
+        error: state.builder.error,
+        isAuth: state.auth.token !== null
     };    
 }
 
@@ -95,7 +104,8 @@ const mapDispatchToProps = dispatch => {
     return {
         ingredientHandler: (name, q) => dispatch(handleIngredient(name, q)),
         initIngredient: () => dispatch(initIngredient()),
-        purchaseInit: () => dispatch(purchaseInit())
+        purchaseInit: () => dispatch(purchaseInit()),
+        onSetAuthRedirectPath: (path) => dispatch(setAuthRedirectPath(path))
     }
 }
 

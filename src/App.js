@@ -5,6 +5,7 @@ import Checkout from './containers/Checkout';
 import { Route } from 'react-router-dom';
 import Orders from './containers/Orders';
 import Auth from './containers/Auth';
+import Logout from './containers/Auth/Logout';
 
 function App() {    
     return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/" exact component={Builder} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/auth" component={Auth} />
+            <Route path="/logout" component={Logout} />
             <Route path="/orders" component={Orders} />
         </Layout>
       

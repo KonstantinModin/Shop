@@ -9,7 +9,7 @@ const controls = [
     { label: 'Meat', type: 'meat'}
 ]
 
-const Controls = ({ price, ingredientHandler, disabled, canWeOrder, orderNowButton }) => {
+const Controls = ({ price, ingredientHandler, disabled, canWeOrder, orderNowButton, isAuth }) => {
     return (
         <div className="Controls">
             <div>Current price: <strong>{price.toFixed(2)}</strong> Euros</div>
@@ -23,7 +23,7 @@ const Controls = ({ price, ingredientHandler, disabled, canWeOrder, orderNowButt
             <button 
                 className="OrderButton" 
                 disabled={!canWeOrder}
-                onClick={() => orderNowButton(true)}>Order Now</button>
+                onClick={() => orderNowButton(true)}>{isAuth ? 'Order Now' : 'Please Sign Up'}</button>
         </div>
     )
 }

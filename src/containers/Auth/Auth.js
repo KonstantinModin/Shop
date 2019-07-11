@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
 import Spinner from '../../components/UI/Spinner';
-import { auth } from '../../store/actions';
+import { auth, setAuthRedirectPath } from '../../store/actions';
+import { Redirect } from 'react-router-dom';
 import './Auth.css';
 
 class Auth extends Component {
@@ -96,6 +97,12 @@ class Auth extends Component {
             return {isSignup: !state.isSignup}
         })
     };
+
+    componentDidMount() {
+        if (!this.props.building && this.props.authRedirectPath !== '/') {
+            this.props.onSetAuthRedirectPath();
+        }
+    }
     
     render() {
         let form = (
@@ -128,9 +135,12 @@ class Auth extends Component {
         if (this.props.error) {
             errorMessage = <h2>{this.props.error.message.split`_`.join` `}</h2>
         }
+
+        let authRedirect = this.props.isAuth ? <Redirect to={this.props.authRedirectPath} /> : null;
         
         return (
             <div className="Auth">
+                {authRedirect}
                 <h2>{this.state.isSignup.toString()}</h2>
                 {errorMessage}
                 {form}
@@ -142,13 +152,17 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isAuth: state.auth.token !== null,
+        building: state.builder.building,
+        authRedirectPath: state.auth.authRedirectPath
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(auth(email, password, isSignup))
+        onAuth: (email, password, isSignup) => dispatch(auth(email, password, isSignup)),
+        onSetAuthRedirectPath: () => dispatch(setAuthRedirectPath('/'))
     }
 }
 

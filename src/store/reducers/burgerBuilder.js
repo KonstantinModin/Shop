@@ -16,7 +16,8 @@ const INGREDIENT_PRICES = {
 const initialState = {
     ingredients: null,
     totalPrice: 2,
-    error: false
+    error: false,
+    building: false
 };
 
 const reducer = (state = initialState, {type, payload}) => {
@@ -29,14 +30,16 @@ const reducer = (state = initialState, {type, payload}) => {
                 meat: payload.meat
             },
             totalPrice: 2,
-            error: false});
+            error: false,
+            building: false});
             
         case FETCH_INGREDIENTS_FAILED: return updateObject(state, {error: true});
 
         case HANDLE_INGREDIENT: return updateObject(state,
             {ingredients: updateObject(state.ingredients,
                 {[payload.name]: state.ingredients[payload.name] + payload.q}),
-            totalPrice: state.totalPrice + INGREDIENT_PRICES[payload.name] * payload.q});        
+            totalPrice: state.totalPrice + INGREDIENT_PRICES[payload.name] * payload.q,
+            building: true});        
         
         default: return state;
     }

@@ -2,7 +2,8 @@ import {
     AUTH_START,
     AUTH_SUCCESS,
     AUTH_FAIL,
-    AUTH_LOGOUT
+    AUTH_LOGOUT,
+    SET_AUTH_REDIRECT_PATH
 } from './actionTypes';
 import axios from 'axios';
 
@@ -29,7 +30,9 @@ export const authFail = (error) => {
     };
 };
 
-const logout = () => {
+export const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationTime');
     return {
         type: AUTH_LOGOUT
     };
@@ -57,6 +60,9 @@ export const auth = (email, password, isSignup) => {
         axios.post(url, authData)
         .then(response => {
             console.log('response', response);
+            const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+            localStorage.setItem('token', response.data.idToken);
+            localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSuccess(response.data));
             dispatch(checkAuthTimeout(response.data.expiresIn));
         })
@@ -64,5 +70,12 @@ export const auth = (email, password, isSignup) => {
             console.log('error :', error.response);
             dispatch(authFail(error.response.data.error));
         });
+    }
+}
+
+export const setAuthRedirectPath = (path) => {
+    return {
+        type: SET_AUTH_REDIRECT_PATH,
+        payload: path
     }
 }
