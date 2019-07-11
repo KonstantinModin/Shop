@@ -100,8 +100,7 @@ class ContactData extends Component {
                 touched: false,
                 valid: true
             },
-        },        
-        // loading: false,
+        },
         formIsValid: false
     }
 
@@ -180,7 +179,6 @@ class ContactData extends Component {
         if (this.props.loading) {
             form = <Spinner />
         }
-        // console.log('this.state.formIsValid :', this.state.formIsValid);
         return (
             <div className="ContactData">
                 {form}                
