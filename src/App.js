@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Layout from './components/Layout';
 import Builder from './containers/Builder';
 import Checkout from './containers/Checkout';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Orders from './containers/Orders';
 import Auth from './containers/Auth';
@@ -18,28 +18,38 @@ function App(props) {
     }, []);
     
     let routes = (
-        <>
-            <Route path="/" exact component={Builder} />
+        <Switch>
             <Route path="/auth" component={Auth} />
-        </>
+            <Route path="/" exact component={Builder} />
+            <Redirect to="/" />
+        </Switch>
     );
 
-    if (isAuth) routes = (
-        <>
-            <Route path="/" exact component={Builder} />
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/orders" component={Orders} />
-        </>
-    )
+    if (isAuth) {
+        routes = (
+            <Switch>
+                <Route path="/checkout" component={Checkout} />
+                <Route path="/orders" component={Orders} />
+                <Route path="/logout" component={Logout} />
+                <Route path="/" exact component={Builder} />
+                <Redirect to="/" />
+            </Switch>
+        )
+    };
     
     return (
         <div className="App">
-            <Layout>            
+            <Layout> 
+                {/* <Route path="/" exact component={Builder} />
+                <Route path="/auth" component={Auth} />                
+                <Route path="/checkout" component={Checkout} />
+                <Route path="/logout" component={Logout} />
+                <Route path="/orders" component={Orders} /> */}
+
                 {routes}
             </Layout>        
         </div>
-  );
+    );
 };
 
 const mapStateToProps = state => {
