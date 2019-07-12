@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from './components/Layout';
 import Builder from './containers/Builder';
 import Checkout from './containers/Checkout';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Orders from './containers/Orders';
 import Auth from './containers/Auth';
 import Logout from './containers/Auth/Logout';
+import { authCheckState } from './store/actions';
 
-function App() {    
+function App(props) {
+    useEffect(() => {
+        console.log('app use effect');
+        props.onTryAutoSignup();
+    }, []);
+    
     return (
     <div className="App">
         <Layout>            
@@ -20,6 +27,12 @@ function App() {
       
     </div>
   );
-}
+};
 
-export default App;
+const mapDispatchToProps = dispatch => {
+    return {
+        onTryAutoSignup: () => dispatch(authCheckState())
+    };
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(App));
