@@ -10,23 +10,42 @@ import Logout from './containers/Auth/Logout';
 import { authCheckState } from './store/actions';
 
 function App(props) {
+    const { isAuth } = props;
+
     useEffect(() => {
         console.log('app use effect');
         props.onTryAutoSignup();
     }, []);
     
-    return (
-    <div className="App">
-        <Layout>            
+    let routes = (
+        <>
+            <Route path="/" exact component={Builder} />
+            <Route path="/auth" component={Auth} />
+        </>
+    );
+
+    if (isAuth) routes = (
+        <>
             <Route path="/" exact component={Builder} />
             <Route path="/checkout" component={Checkout} />
-            <Route path="/auth" component={Auth} />
             <Route path="/logout" component={Logout} />
             <Route path="/orders" component={Orders} />
-        </Layout>
-      
-    </div>
+        </>
+    )
+    
+    return (
+        <div className="App">
+            <Layout>            
+                {routes}
+            </Layout>        
+        </div>
   );
+};
+
+const mapStateToProps = state => {
+    return {
+        isAuth: state.auth.token !== null
+    };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -35,4 +54,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
