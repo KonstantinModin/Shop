@@ -5,6 +5,7 @@ import Button from '../../components/UI/Button';
 import Spinner from '../../components/UI/Spinner';
 import { auth, setAuthRedirectPath } from '../../store/actions';
 import { Redirect, withRouter } from 'react-router-dom';
+import { checkValidity } from '../../store/utility';
 import './Auth.css';
 
 class Auth extends Component {
@@ -47,32 +48,32 @@ class Auth extends Component {
         isSignup: true
     }
 
-    checkValidity({validation, value, shouldValidate}) {        
-        if (!shouldValidate) return true;
-        let isValid = true;
-        if (validation.required) {
-            isValid = value.trim() !== '' && isValid;            
-        }
+    // checkValidity({validation, value, shouldValidate}) {        
+    //     if (!shouldValidate) return true;
+    //     let isValid = true;
+    //     if (validation.required) {
+    //         isValid = value.trim() !== '' && isValid;            
+    //     }
         
-        if (validation.minLength) {
-            isValid = value.length >= validation.minLength && isValid;            
-        }
-        if (validation.maxLength) {
-            isValid = value.length <= validation.maxLength && isValid;            
-        }
+    //     if (validation.minLength) {
+    //         isValid = value.length >= validation.minLength && isValid;            
+    //     }
+    //     if (validation.maxLength) {
+    //         isValid = value.length <= validation.maxLength && isValid;            
+    //     }
         
-        if (validation.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid;           
-        }
-        return isValid;
-    }
+    //     if (validation.isEmail) {
+    //         const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    //         isValid = pattern.test(value) && isValid;           
+    //     }
+    //     return isValid;
+    // }
 
     inputChangedHandler = (event, controlName) => {       
         const updatedControls = {...this.state.controls};
         const updatedItem = {...updatedControls[controlName]};
         updatedItem.value = event.target.value;
-        updatedItem.valid = this.checkValidity(updatedItem);
+        updatedItem.valid = checkValidity(updatedItem);
         updatedItem.touched = true;        
         updatedControls[controlName] = updatedItem;
         this.setState({controls: updatedControls});

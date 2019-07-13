@@ -6,6 +6,7 @@ import Input from '../../../components/UI/Input';
 import { connect } from 'react-redux';
 import { purchaseBurger } from '../../../store/actions';
 import withErrorHandler from '../../../hoc/withErrorHandler';
+import { checkValidity } from '../../../store/utility';
 import './ContactData.css';
 
 class ContactData extends Component {  
@@ -120,32 +121,32 @@ class ContactData extends Component {
         onOrderBurger(order, token);        
     }
 
-    checkValidity({validation, value, shouldValidate}) {
-        if (!shouldValidate) return true;
-        let isValid = true;
-        if (validation.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
+    // checkValidity({validation, value, shouldValidate}) {
+    //     if (!shouldValidate) return true;
+    //     let isValid = true;
+    //     if (validation.required) {
+    //         isValid = value.trim() !== '' && isValid;
+    //     }
 
-        if (validation.minLength) {
-            isValid = value.length >= validation.minLength && isValid;
-        }
-        if (validation.maxLength) {
-            isValid = value.length <= validation.maxLength && isValid;
-        }
-        return isValid;
-    }
+    //     if (validation.minLength) {
+    //         isValid = value.length >= validation.minLength && isValid;
+    //     }
+    //     if (validation.maxLength) {
+    //         isValid = value.length <= validation.maxLength && isValid;
+    //     }
+    //     return isValid;
+    // };
 
-    inputChangedHandler = ({target: {value}}, name) => {        
+    inputChangedHandler = ({target: {value}}, name) => {   
         const updatedOrderForm = { ...this.state.orderForm};
         const updatedFormElement = { ...updatedOrderForm[name]};
         updatedFormElement.value = value;
         updatedFormElement.touched = true;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement);
+        updatedFormElement.valid = checkValidity(updatedFormElement);
         updatedOrderForm[name] = updatedFormElement;
         
         this.setState({orderForm: updatedOrderForm});              
-    }
+    };
     
     componentDidUpdate(_, prevState){
         const formIsValid = Object.entries(this.state.orderForm).every(i => i[1].valid);        
