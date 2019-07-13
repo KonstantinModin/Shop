@@ -77,10 +77,11 @@ export const fetchOrdersStart = () => {
     }
 };
 
-export const fetchOrders = (token) => {
+export const fetchOrders = (token, userId) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
-        server.get('/orders.json?auth=' + token)
+        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+        server.get('/orders.json' + queryParams)
         .then(response => {
             console.log('response.data :', response.data);
             dispatch(fetchOrdersSuccess(Object.entries(response.data)))

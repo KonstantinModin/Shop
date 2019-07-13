@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Component } from 'react';
 import Layout from './components/Layout';
 import Builder from './containers/Builder';
 import Checkout from './containers/Checkout';
@@ -9,47 +9,50 @@ import Auth from './containers/Auth';
 import Logout from './containers/Auth/Logout';
 import { authCheckState } from './store/actions';
 
-function App(props) {
-    const { isAuth } = props;
-
-    useEffect(() => {
-        console.log('app use effect');
-        props.onTryAutoSignup();
-    }, []);
+class App extends Component {
     
-    let routes = (
-        <Switch>
-            <Route path="/auth" component={Auth} />
-            <Route path="/" exact component={Builder} />
-            <Redirect to="/" />
-        </Switch>
-    );
-
-    if (isAuth) {
-        routes = (
+    componentDidMount() {
+        console.log('app component did moun');
+        this.props.onTryAutoSignup();
+    };
+    render() {
+        const { isAuth } = this.props;
+        
+        let routes = (
             <Switch>
-                <Route path="/checkout" component={Checkout} />
-                <Route path="/orders" component={Orders} />
-                <Route path="/logout" component={Logout} />
+                <Route path="/auth" component={Auth} />
                 <Route path="/" exact component={Builder} />
                 <Redirect to="/" />
             </Switch>
-        )
-    };
-    
-    return (
-        <div className="App">
-            <Layout> 
-                {/* <Route path="/" exact component={Builder} />
-                <Route path="/auth" component={Auth} />                
-                <Route path="/checkout" component={Checkout} />
-                <Route path="/logout" component={Logout} />
-                <Route path="/orders" component={Orders} /> */}
+        );
 
-                {routes}
-            </Layout>        
-        </div>
-    );
+        if (isAuth) {
+            routes = (
+                <Switch>
+                    <Route path="/checkout" component={Checkout} />
+                    <Route path="/auth" component={Auth} />
+                    <Route path="/orders" component={Orders} />
+                    <Route path="/logout" component={Logout} />
+                    <Route path="/" exact component={Builder} />
+                    <Redirect to="/" />
+                </Switch>
+            )
+        };
+        
+        return (
+            <div className="App">
+                <Layout> 
+                    {/* <Route path="/" exact component={Builder} />
+                    <Route path="/auth" component={Auth} />                
+                    <Route path="/checkout" component={Checkout} />
+                    <Route path="/logout" component={Logout} />
+                    <Route path="/orders" component={Orders} /> */}
+
+                    {routes}
+                </Layout>        
+            </div>
+        );
+    }
 };
 
 const mapStateToProps = state => {

@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import './Modal.css';
 import Backdrop from '../Backdrop/';
 
-export default class Modal extends Component {
-    componentDidUpdate(){
-        console.log('Modal Did Update');
-    }
+export default class Modal extends Component {   
 
     shouldComponentUpdate = ({show, children}) => {       
         return this.props.show !== show || (this.props.children !== children);

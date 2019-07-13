@@ -12,7 +12,7 @@ const Orders = (props) => {
     
     useEffect(() => {
         console.log('Use effect in orders');
-        props.onFetchOrders(props.token);
+        props.onFetchOrders(props.token, props.userId);
         // server.get('/orders.json')
         //     .then((response) => {
         //         // console.log('response.data in Orders :', response.data);
@@ -56,13 +56,14 @@ const mapStateToProps = state => {
     return {
         orders: state.order.orders,
         loading: state.order.loading,
-        token: state.auth.token
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: (token) => dispatch(fetchOrders(token))
+        onFetchOrders: (token, id) => dispatch(fetchOrders(token, id))
     }
 };
 

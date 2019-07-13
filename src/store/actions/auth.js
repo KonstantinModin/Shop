@@ -96,8 +96,6 @@ export const authCheckState = () => {
             } else {
                 dispatch(logout());
             }
-
         }
-
     }
 }

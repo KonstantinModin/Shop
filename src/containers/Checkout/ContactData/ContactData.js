@@ -106,15 +106,18 @@ class ContactData extends Component {
 
     orderHandler = (e) => {
         e.preventDefault();
+
+        const {userId, ingredients, price, onOrderBurger, token} = this.props;
         
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
+            userId: userId,
+            ingredients: ingredients,
+            price: price,
             date: new Date(),
-            customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`),
-            deliveryMethod: 'pigeons'
+            customerData: Object.entries(this.state.orderForm).map(([a, b])=> `${a}: ${b.value}`)
+            // deliveryMethod: 'pigeons'
         };
-        this.props.onOrderBurger(order, this.props.token);        
+        onOrderBurger(order, token);        
     }
 
     checkValidity({validation, value, shouldValidate}) {
@@ -154,6 +157,7 @@ class ContactData extends Component {
     };
 
     render() {
+        console.log('Contact data render()');
         let form = (
             <>
                 <h2>Enter your Contact Data</h2>
@@ -192,14 +196,15 @@ const mapStateToProps = state => {
         price: state.builder.totalPrice,
         loading: state.order.loading,
         purchased: state.order.purchased,
-        token: state.auth.token
-    }
-}
+        token: state.auth.token,
+        userId: state.auth.userId
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
         onOrderBurger: (data, token) => dispatch(purchaseBurger(data, token))        
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, server));

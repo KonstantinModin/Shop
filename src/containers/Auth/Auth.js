@@ -4,7 +4,7 @@ import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
 import Spinner from '../../components/UI/Spinner';
 import { auth, setAuthRedirectPath } from '../../store/actions';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import './Auth.css';
 
 class Auth extends Component {
@@ -82,12 +82,20 @@ class Auth extends Component {
         const formIsValid = Object.entries(this.state.controls).every(i => i[1].valid);        
         if (formIsValid !== prevState.formIsValid) {
             this.setState({formIsValid: formIsValid});
-        };        
+        };
+        console.log('this.props.isAuth :', this.props.isAuth);
+        // console.log('this.props.building :', this.props.building);
+        console.log('this.props.authRedirectPath :', this.props.authRedirectPath);
+
+        if (this.props.isAuth) {
+            this.props.history.push(this.props.authRedirectPath);
+        }    
+
     };
 
     submitHandler = (event) => {
-        const {isSignup, controls: {email, password }} = this.state;
         event.preventDefault();
+        const {isSignup, controls: {email, password }} = this.state;
         this.props.onAuth(email.value, password.value, isSignup);
     }
 
@@ -99,8 +107,8 @@ class Auth extends Component {
     };
 
     componentDidMount() {
-        if (!this.props.building && this.props.authRedirectPath !== '/') {
-            this.props.onSetAuthRedirectPath();
+        if (!this.props.building) {
+            this.props.onSetAuthRedirectPath(this.props.authRedirectPath);
         }
     }
     
@@ -120,7 +128,7 @@ class Auth extends Component {
                                 changed={(event) => this.inputChangedHandler(event, a)} />                        
                         ))}                    
                         <div className="ButtonDiv">
-                            <Button enabled={this.state.formIsValid} btnType="Success" clicked={this.orderHandler}>Submit</Button>
+                            <Button enabled={this.state.formIsValid} btnType="Success">Submit</Button>
                             <Button 
                                 btnType="Danger" 
                                 clicked={this.switchAuthModeHandler}
@@ -136,12 +144,13 @@ class Auth extends Component {
             errorMessage = <h2>{this.props.error.message.split`_`.join` `}</h2>
         }
 
-        let authRedirect = this.props.isAuth ? <Redirect to={this.props.authRedirectPath} /> : null;
+        // let authRedirect = this.props.isAuth ? <Redirect to={this.props.authRedirectPath} /> : null;
         console.log('this.props.isAuth', this.props.isAuth);
-        console.log('authRedirect', authRedirect);
+        // console.log('authRedirect', authRedirect);
+        console.log('this.props.authRedirectPath :', this.props.authRedirectPath);
         return (
             <div className="Auth">
-                {authRedirect}
+                {/* {authRedirect} */}
                 <h2>{this.state.isSignup.toString()}</h2>
                 {errorMessage}
                 {form}
@@ -167,4 +176,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));
