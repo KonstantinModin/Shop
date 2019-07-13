@@ -77,41 +77,38 @@ class Auth extends Component {
         updatedItem.touched = true;        
         updatedControls[controlName] = updatedItem;
         this.setState({controls: updatedControls});
-    }
+    };
 
     componentDidUpdate(_, prevState){
         const formIsValid = Object.entries(this.state.controls).every(i => i[1].valid);        
         if (formIsValid !== prevState.formIsValid) {
             this.setState({formIsValid: formIsValid});
         };
-        console.log('this.props.isAuth :', this.props.isAuth);
-        // console.log('this.props.building :', this.props.building);
-        console.log('this.props.authRedirectPath :', this.props.authRedirectPath);
+       
 
         if (this.props.isAuth) {
             this.props.history.push(this.props.authRedirectPath);
-        }    
-
+        };
     };
 
     submitHandler = (event) => {
         event.preventDefault();
         const {isSignup, controls: {email, password }} = this.state;
         this.props.onAuth(email.value, password.value, isSignup);
-    }
+    };
 
     switchAuthModeHandler = (event) => {
         event.preventDefault();
         this.setState(state => {
             return {isSignup: !state.isSignup}
-        })
+        });
     };
 
     componentDidMount() {
         if (!this.props.building) {
             this.props.onSetAuthRedirectPath(this.props.authRedirectPath);
-        }
-    }
+        };
+    };
     
     render() {
         let form = (
@@ -146,9 +143,9 @@ class Auth extends Component {
         }
 
         // let authRedirect = this.props.isAuth ? <Redirect to={this.props.authRedirectPath} /> : null;
-        console.log('this.props.isAuth', this.props.isAuth);
+        // console.log('this.props.isAuth', this.props.isAuth);
         // console.log('authRedirect', authRedirect);
-        console.log('this.props.authRedirectPath :', this.props.authRedirectPath);
+        // console.log('this.props.authRedirectPath :', this.props.authRedirectPath);
         return (
             <div className="Auth">
                 {/* {authRedirect} */}
@@ -157,8 +154,8 @@ class Auth extends Component {
                 {form}
             </div>
         )
-    }
-}
+    };
+};
 
 const mapStateToProps = state => {
     return {
@@ -167,14 +164,14 @@ const mapStateToProps = state => {
         isAuth: state.auth.token !== null,
         building: state.builder.building,
         authRedirectPath: state.auth.authRedirectPath
-    }
-}
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password, isSignup) => dispatch(auth(email, password, isSignup)),
         onSetAuthRedirectPath: () => dispatch(setAuthRedirectPath('/'))
-    }
-}
+    };
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));
