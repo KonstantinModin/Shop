@@ -47,7 +47,7 @@ const reducer = (state = initialState, {type, payload}) => {
         case FETCH_ORDERS_FAIL: return updateObject(state, {loading: false});
 
         default: return state;
-    }
+    };
 };
 
 export default reducer;
