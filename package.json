@@ -2,6 +2,7 @@
   "name": "shop",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://konstantinmodin.github.io/Shop/",
   "dependencies": {
     "axios": "^0.19.0",
     "enzyme": "^3.10.0",
