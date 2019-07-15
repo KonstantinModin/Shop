@@ -12,7 +12,7 @@ import { handleIngredient, initIngredient, setAuthRedirectPath } from '../../sto
 import { purchaseInit } from '../../store/actions';
 
 
-class Builder extends Component {
+export class Builder extends Component {
     state = {        
         buttonClicked: false        
     };

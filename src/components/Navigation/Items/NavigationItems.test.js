@@ -24,10 +24,10 @@ describe('<Navigation Items />', () => {
         wrapper.setProps({isAuth: true});
         expect(wrapper.find(NavLink)).toHaveLength(3);
     });
-    
-    it('should render 3 <Navigation Items /> elements if authenticated', () => {
+
+    it('should contain (<NavLink to="/logout">Logout</NavLink>) if authenticated', () => {
         wrapper.setProps({isAuth: true});
-        expect(wrapper.find(NavLink)).toHaveLength(3);
+        expect(wrapper.contains(<NavLink to="/logout">Logout</NavLink>)).toEqual(true);
     });
 
 });
