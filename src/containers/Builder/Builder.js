@@ -15,12 +15,12 @@ import { purchaseInit } from '../../store/actions';
 class Builder extends Component {
     state = {        
         buttonClicked: false        
-    }
+    };
 
     componentDidMount() {
         this.props.initIngredient();
         this.props.purchaseInit();
-    }
+    };
 
     orderNowButtonHandler = (value) => {
         if (this.props.isAuth) {
@@ -34,7 +34,7 @@ class Builder extends Component {
     purchaseContinueHandler = () => {        
         // this.props.history.push('/checkout', [this.props.ingredients, this.props.totalPrice]);
         this.props.history.push('/checkout');
-    }
+    };
     
     render() {
         const { buttonClicked } = this.state;
@@ -77,8 +77,9 @@ class Builder extends Component {
                 {burger}
             </>
         )
-    }
-}
+    };
+};
+
 const mapStateToProps = state => {
     return {
         ingredients: state.builder.ingredients,
@@ -86,7 +87,7 @@ const mapStateToProps = state => {
         error: state.builder.error,
         isAuth: state.auth.token !== null
     };    
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -94,8 +95,8 @@ const mapDispatchToProps = dispatch => {
         initIngredient: () => dispatch(initIngredient()),
         purchaseInit: () => dispatch(purchaseInit()),
         onSetAuthRedirectPath: (path) => dispatch(setAuthRedirectPath(path))
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Builder, server));
 

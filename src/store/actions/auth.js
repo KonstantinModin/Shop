@@ -72,8 +72,8 @@ export const auth = (email, password, isSignup) => {
             console.log('error :', error.response);
             dispatch(authFail(error.response.data.error));
         });
-    }
-}
+    };
+};
 
 export const setAuthRedirectPath = (path) => {
     return {
@@ -97,5 +97,5 @@ export const authCheckState = () => {
                 dispatch(logout());
             }
         }
-    }
-}
+    };
+};
