@@ -21,6 +21,6 @@ const Order = ({ingredients, price, date}) => {
             <h3>Price: <strong>{price}$</strong></h3>
         </div>
     )
-}
+};
 
 export default Order;

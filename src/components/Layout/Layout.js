@@ -34,7 +34,7 @@ class Layout extends Component {
 const mapStateToProps = state => {
     return {
         isAuth: state.auth.token !== null
-    }
+    };
 };
 
 export default connect(mapStateToProps)(Layout);

@@ -9,5 +9,6 @@ const DrawerToggle = ({onClick}) => {
             <div></div>  
         </div>
     )
-}
+};
+
 export default DrawerToggle;
