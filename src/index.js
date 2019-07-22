@@ -7,9 +7,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import burgerBuilderreducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
+import { logoutSaga } from './store/sagas/auth';
 
 const rootReducer = combineReducers({ 
     builder: burgerBuilderreducer, 
@@ -17,15 +19,19 @@ const rootReducer = combineReducers({
     auth: authReducer 
 });
 
-console.log('process.env.NODE_ENV :', process.env.NODE_ENV);
+const sagaMiddleware = createSagaMiddleware();
 
+console.log('process.env.NODE_ENV :', process.env.NODE_ENV);
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const composeEnhancers = process.env.NODE_ENV === 'development' ? 
     (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })) : null || compose;
+
 const store = createStore(rootReducer, composeEnhancers(
-    applyMiddleware(thunk)
-  ));
+    applyMiddleware(thunk, sagaMiddleware)
+));
+
+sagaMiddleware.run(logoutSaga);
 
 
 ReactDOM.render(<Provider store={store}><Router><App /></Router></Provider>, document.getElementById('root'));
