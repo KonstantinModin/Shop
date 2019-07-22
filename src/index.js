@@ -11,7 +11,7 @@ import createSagaMiddleware from 'redux-saga';
 import burgerBuilderreducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
-import { logoutSaga } from './store/sagas/auth';
+import { watchAuth } from './store/sagas';
 
 const rootReducer = combineReducers({ 
     builder: burgerBuilderreducer, 
@@ -31,7 +31,7 @@ const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk, sagaMiddleware)
 ));
 
-sagaMiddleware.run(logoutSaga);
+sagaMiddleware.run(watchAuth);
 
 
 ReactDOM.render(<Provider store={store}><Router><App /></Router></Provider>, document.getElementById('root'));

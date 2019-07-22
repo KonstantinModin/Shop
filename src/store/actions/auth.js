@@ -3,7 +3,9 @@ import {
     AUTH_SUCCESS,
     AUTH_FAIL,
     AUTH_LOGOUT,
-    SET_AUTH_REDIRECT_PATH
+    SET_AUTH_REDIRECT_PATH,
+    AUTH_INITIATE_LOGOUT,
+    AUTH_CHECK_TIMEOUT
 } from './actionTypes';
 import axios from 'axios';
 
@@ -31,18 +33,22 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expirationDate');
-    localStorage.removeItem('userId');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('expirationDate');
+    // localStorage.removeItem('userId');
     return {
-        type: AUTH_LOGOUT
+        type: AUTH_INITIATE_LOGOUT
     };
 };
 
 const checkAuthTimeout = (expirationTime) => {
-    return dispatch => {
-        setTimeout(() => dispatch(logout()), expirationTime * 1000);
+    return {
+        type: AUTH_CHECK_TIMEOUT,
+        expirationTime: expirationTime
     };
+    // return dispatch => {
+    //     setTimeout(() => dispatch(logout()), expirationTime * 1000);
+    // };
 };
 
 export const auth = (email, password, isSignup) => {
