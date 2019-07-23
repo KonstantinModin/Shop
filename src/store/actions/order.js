@@ -41,11 +41,6 @@ export const purchaseBurger = (data, token) => {
         server.post('/orders.json?auth=' + token, data)
             .then(res => {
                 dispatch(purchaseBurgerSuccess(res.data.name, data));
-                // console.log(init, pus);
-                // console.log('posted: :', res);
-                // init();
-                // pus('/');
-                
             })           
             .catch(err => dispatch(purchaseBurgerFail(err)));
     }

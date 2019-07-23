@@ -1,4 +1,4 @@
-export { handleIngredient, initIngredient  } from './burgerBuilder';
+export { handleIngredient, initIngredient, setIngredients, fetchIngredientsFailed  } from './burgerBuilder';
 
 export { purchaseBurger, purchaseInit, fetchOrders } from './order';
 
