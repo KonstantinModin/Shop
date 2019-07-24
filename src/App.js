@@ -24,7 +24,7 @@ const asyncAuth = asyncComponent(() => {     //// LAZY LOADING
 class App extends Component {
     
     componentDidMount() {
-        console.log('app component did moun');
+        // console.log('app component did moun');
         this.props.onTryAutoSignup();
     };
     render() {
