@@ -1,7 +1,8 @@
 import { 
     HANDLE_INGREDIENT,      
     SET_INGREDIENTS, 
-    FETCH_INGREDIENTS_FAILED 
+    FETCH_INGREDIENTS_FAILED,
+    INIT_INGREDIENT 
 } from '../actions/actionTypes';
 
 import { updateObject } from "../utility";
@@ -22,6 +23,10 @@ const initialState = {
 
 const reducer = (state = initialState, {type, payload}) => {
     switch(type) {
+        case INIT_INGREDIENT: {
+            console.log('INIT_INGREDIENT Reducer');
+            return state;
+        }
         case SET_INGREDIENTS: return updateObject(state,
             {ingredients: {
                 salad: payload.salad,
