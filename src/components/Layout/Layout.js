@@ -22,9 +22,7 @@ const Layout = ({ isAuth, children }) => {
                 {children}                
             </main>
         </>
-    )
-
-    
+    )    
 };
 
 const mapStateToProps = state => {
