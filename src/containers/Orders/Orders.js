@@ -25,7 +25,7 @@ const Orders = (props) => {
         //             return {...state, loading: false}
         //         });
         //     });
-
+        // eslint-disable-next-line
         }, []);    
 
     let content = <Spinner />;

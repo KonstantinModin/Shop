@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary';
 import ContactData from './ContactData';
 import { Route, Redirect } from 'react-router-dom';
@@ -10,16 +10,16 @@ const Checkout = (props) => {
     
     const checkoutCancelledHandler = () => {
         props.history.goBack();
-    }
+    };
 
     const checkoutContinuedHandler = () => {
         // props.history.replace('/checkout/contact-data', [ingredients, price]);
         props.history.replace('/checkout/contact-data');
-    } 
+    };
 
-    useEffect(() => {
-        console.log('ingredients in checkout from Redux :', ingredients);        
-    });
+    // useEffect(() => {
+    //     console.log('ingredients in checkout from Redux :', ingredients);        
+    // });
 
     let summary = <Redirect to="/" />;
     if (props.ingredients) {
