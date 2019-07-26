@@ -4,7 +4,7 @@ import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
 import Spinner from '../../components/UI/Spinner';
 import { auth, setAuthRedirectPath } from '../../store/actions';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { checkValidity } from '../../store/utility';
 import './Auth.css';
 

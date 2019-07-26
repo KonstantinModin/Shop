@@ -10,7 +10,7 @@ import {
     FETCH_ORDERS_INIT
 } from './actionTypes';
 
-import server from '../../axios-orders';
+// import server from '../../axios-orders';
 
 export const purchaseBurgerSuccess = (id, data) => {
     return {
