@@ -3,9 +3,8 @@ import './OrderSummary.css';
 import Button from '../../UI/Button/';
 // import { Link } from 'react-router-dom';
 
-const OrderSummary = (props) => {
+const OrderSummary = ({order, totalP, cancel, makeAdeal}) => {    
     
-    const {order, totalP, cancel, makeAdeal} = props;
 
     const summary = Object.keys(order).filter(i => order[i] > 0).map(i => (
         <li key={i}>

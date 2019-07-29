@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Burger from '../../components/Burger';
 import Controls from '../../components/Burger/Controls';
 import Modal from '../../components/UI/Modal';
@@ -12,72 +12,75 @@ import { handleIngredient, initIngredient, setAuthRedirectPath } from '../../sto
 import { purchaseInit } from '../../store/actions';
 
 
-export class Builder extends Component {
-    state = {        
-        buttonClicked: false        
-    };
-
-    componentDidMount() {
-        this.props.initIngredient();
-        this.props.purchaseInit();
-    };
-
-    orderNowButtonHandler = (value) => {
-        if (this.props.isAuth) {
-            this.setState({buttonClicked: value});
-        } else {
-            this.props.onSetAuthRedirectPath('/checkout');
-            this.props.history.push('/auth');
-        }
-    };
-
-    purchaseContinueHandler = () => {        
-        // this.props.history.push('/checkout', [this.props.ingredients, this.props.totalPrice]);
-        this.props.history.push('/checkout');
-    };
+export const Builder = (props) => {
+    const [buttonClicked, setButtonClicked ] = useState(false);
     
-    render() {
-        const { buttonClicked } = this.state;
-        const { ingredients, totalPrice, ingredientHandler, error, isAuth } = this.props;
+    useEffect(() => {
+        props.initIngredient();
+        props.purchaseInit();
+    // eslint-disable-next-line
+    }, []);
 
-        const disabledInfo = { ...ingredients};
-        for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
-        let canWeOrder = false;
-        let orderSummary = null;       
-        
-        let burger = error ? <h1>Ingredients can't be loaded!</h1> : <Spinner />;
 
-        if (ingredients) {
-            canWeOrder = Object.values(ingredients).some(i => i > 0);
-            burger = <>
-                        <Burger ingredients={ingredients}/>
-                        <Controls
-                            ingredientHandler={ingredientHandler}                    
-                            disabled={disabledInfo}
-                            price={totalPrice}
-                            canWeOrder={canWeOrder}
-                            orderNowButton={this.orderNowButtonHandler}
-                            isAuth={isAuth} />
-                    </>;
-            orderSummary = <OrderSummary 
-            order={ingredients} 
-            totalP={totalPrice}
-            cancel={() => this.orderNowButtonHandler(false)}
-            makeAdeal={this.purchaseContinueHandler}/>;
+    const orderNowButtonHandler = (value) => {
+        if (props.isAuth) {
+            setButtonClicked(value);
+        } else {
+            props.onSetAuthRedirectPath('/checkout');
+            props.history.push('/auth');
         }
-        // if (this.state.loading) {
-        //     orderSummary = <Spinner />
-        // }
+    };
 
-        return (
-            <>
-                <Modal show={buttonClicked} modalClosed={() => this.orderNowButtonHandler(false)}>
+    const purchaseContinueHandler = () => {        
+        // props.history.push('/checkout', [props.ingredients, props.totalPrice]);
+        props.history.push('/checkout');
+    };    
+    
+    const { ingredients, totalPrice, ingredientHandler, error, isAuth } = props;
+
+    const disabledInfo = {...ingredients};
+    for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] === 0;
+    let canWeOrder = false;
+    let orderSummary = null;       
+    
+    let burger = error ? <h1>Ingredients can't be loaded!</h1> : <Spinner />;
+
+    if (ingredients) {
+        canWeOrder = Object.values(ingredients).some(i => i > 0);
+        // console.log('this in BurgerBuilder:', this);
+        burger = <>
+                    <Burger ingredients={ingredients}/>
+                    <Controls
+                        ingredientHandler={ingredientHandler}                    
+                        disabled={disabledInfo}
+                        price={totalPrice}
+                        canWeOrder={canWeOrder}
+                        orderNowButton={orderNowButtonHandler}
+                        isAuth={isAuth} />
+                </>;
+        orderSummary = <OrderSummary 
+        order={ingredients} 
+        totalP={totalPrice}
+        cancel={() => orderNowButtonHandler(false)}
+        makeAdeal={purchaseContinueHandler}/>;
+    }
+    // if (state.loading) {
+    //     orderSummary = <Spinner />
+    // }
+
+    return (
+        <>
+            {useMemo(() => (
+                <Modal show={buttonClicked} modalClosed={() => orderNowButtonHandler(false)}>
                     {orderSummary}
                 </Modal>
-                {burger}
-            </>
-        )
-    };
+                // eslint-disable-next-line
+                ), [buttonClicked, orderSummary]
+            )}
+            {burger}
+        </>
+    )
+    
 };
 
 const mapStateToProps = state => {
@@ -103,12 +106,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Bui
 
 
 // ingredientHandler = (type, q) => {
-//     const  {ingredients, totalPrice} = this.state;
+//     const  {ingredients, totalPrice} = state;
     
 //     const updatedIngredients = {...ingredients};
 //     updatedIngredients[type] = ingredients[type] + q;
 //     if (updatedIngredients[type] > - 1) {
 //         const newPrice = totalPrice + INGREDIENT_PRICES[type] * q;
-//         this.setState({ingredients: updatedIngredients, totalPrice: newPrice});
+//         setState({ingredients: updatedIngredients, totalPrice: newPrice});
 //     } 
 // }

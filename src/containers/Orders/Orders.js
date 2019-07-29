@@ -29,6 +29,7 @@ const Orders = (props) => {
         }, []);    
 
     let content = <Spinner />;
+    console.log('props.orders :', props.orders);
     if (!props.loading) {
         // console.log(props.loading, props.orders);
         content = (

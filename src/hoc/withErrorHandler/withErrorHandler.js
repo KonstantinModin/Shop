@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Modal from '../../components/UI/Modal';
 
 const withErrorHandler = (WrappedComponent, axios) => {
@@ -18,19 +18,21 @@ const withErrorHandler = (WrappedComponent, axios) => {
             return () => {
                 axios.interceptors.request.eject(reqInterseptor);
                 axios.interceptors.response.eject(responseInterseptor);  
-                console.log('will unmount interseptors!', reqInterseptor, responseInterseptor);
+                // console.log('will unmount interseptors!', reqInterseptor, responseInterseptor);
             }
-        }, []);
+        }, [reqInterseptor, responseInterseptor]);
 
                    
         return (
             <>
-                <Modal 
+                {useMemo(()=>(
+                    <Modal 
                     show={errorState}
                     modalClosed={() => setErrorState(null)}>
                     <h1>We've got an error here:</h1>
                     <h2>{errorState ? errorState.message : null}</h2>
-                </Modal>
+                    </Modal>
+                ), [errorState])}                
                 <WrappedComponent {...props}/>
             </>
         )

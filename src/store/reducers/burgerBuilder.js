@@ -24,7 +24,7 @@ const initialState = {
 const reducer = (state = initialState, {type, payload}) => {
     switch(type) {
         case INIT_INGREDIENT: {
-            console.log('INIT_INGREDIENT Reducer');
+            // console.log('INIT_INGREDIENT Reducer');
             return state;
         }
         case SET_INGREDIENTS: return updateObject(state,

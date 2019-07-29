@@ -55,7 +55,7 @@ export function* authCheckStateSaga(action) {
         const expirationDate = yield new Date(localStorage.getItem('expirationDate'));
         if (expirationDate >= new Date()) {
             const userId = yield localStorage.getItem('userId');
-            yield put(authSuccess({token, userId}));
+            yield put(authSuccess({idToken: token, localId: userId}));
             yield put(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
         } else {
             yield put(logout());

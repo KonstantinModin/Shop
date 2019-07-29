@@ -34,6 +34,7 @@ const store = createStore(rootReducer, composeEnhancers(
 sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchBurgerBuilder);
 sagaMiddleware.run(watchOrder);
+// console.log('this in index.js :', this);
 
 
 ReactDOM.render(<Provider store={store}><Router><App /></Router></Provider>, document.getElementById('root'));
