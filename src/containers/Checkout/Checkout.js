@@ -5,24 +5,18 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Checkout.css';
 
-const Checkout = (props) => {    
-    const { ingredients, price, match: {path}} = props;
+const Checkout = ({ ingredients, price, match: {path}, history }) => {    
     
     const checkoutCancelledHandler = () => {
-        props.history.goBack();
+        history.goBack();
     };
 
-    const checkoutContinuedHandler = () => {
-        // props.history.replace('/checkout/contact-data', [ingredients, price]);
-        props.history.replace('/checkout/contact-data');
-    };
-
-    // useEffect(() => {
-    //     console.log('ingredients in checkout from Redux :', ingredients);        
-    // });
+    const checkoutContinuedHandler = () => {        
+        history.replace('/checkout/contact-data');
+    };    
 
     let summary = <Redirect to="/" />;
-    if (props.ingredients) {
+    if (ingredients) {
         summary = (
             <div className="Checkout">
                 <CheckoutSummary  

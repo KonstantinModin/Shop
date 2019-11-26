@@ -3,11 +3,10 @@ import { logout } from '../../../store/actions';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-const Logout = (props) => {
+const Logout = ({ onLogout }) => {
     useEffect(() => {
-        props.onLogout();
-    // eslint-disable-next-line
-    }, []);
+        onLogout();    
+    }, [ onLogout ]);
 
     return <Redirect to="/"/>
 };

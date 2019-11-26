@@ -7,35 +7,20 @@ import { fetchOrders } from '../../store/actions';
 import { connect } from 'react-redux';
 import './Orders.css';
 
-const Orders = (props) => {
-    // const [state, setState] = useState({orders: null, loading: true});
+const Orders = ({ onFetchOrders, token, userId, orders, loading }) => {
     
-    useEffect(() => {
-        console.log('Use effect in orders');
-        props.onFetchOrders(props.token, props.userId);
-        // server.get('/orders.json')
-        //     .then((response) => {
-        //         // console.log('response.data in Orders :', response.data);
-        //         setState({orders: Object.entries(response.data), loading: false});
-                
-        //     })
-        //     .catch(error => {
-        //         console.log('error in Orders :', error);
-        //         setState((state) => {
-        //             return {...state, loading: false}
-        //         });
-        //     });
-        // eslint-disable-next-line
-        }, []);    
+    useEffect(() => {        
+        onFetchOrders(token, userId);        
+        }, [ onFetchOrders, token, userId ]);    
 
     let content = <Spinner />;
-    console.log('props.orders :', props.orders);
-    if (!props.loading) {
-        // console.log(props.loading, props.orders);
+    
+    if (!loading) {
+        
         content = (
         <>
             <h1>Your Orders</h1>
-            {props.orders.map((item) => 
+            {orders.map((item) => 
                 <Order 
                     key={item[0]} 
                     date={item[1].date} 
