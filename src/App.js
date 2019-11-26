@@ -19,14 +19,11 @@ const asyncOrders = React.lazy(() => {   //// LAZY LOADING
 });
 const asyncAuth = React.lazy(() => import('./containers/Auth'));
 
-const App = (props) => {
+const App = ({ onTryAutoSignup, isAuth }) => {
     
     useEffect(() => {
-        props.onTryAutoSignup();
-        // eslint-disable-next-line
-    }, []);
-    
-    const { isAuth } = props;
+        onTryAutoSignup();        
+    }, [ onTryAutoSignup ]);   
     
     let routes = (
         <Switch>
