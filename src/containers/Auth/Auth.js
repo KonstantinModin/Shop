@@ -8,7 +8,8 @@ import { withRouter } from 'react-router-dom';
 import { checkValidity } from '../../store/utility';
 import './Auth.css';
 
-const Auth = props => {
+const Auth = ({ isAuth, authRedirectPath, history, onAuth, building, 
+    onSetAuthRedirectPath, loading, error }) => {
     const [controls, setControls] = useState({
         email: {
             elementType: 'input',
@@ -42,10 +43,8 @@ const Auth = props => {
             shouldValidate: true,
             touched: false
         }
-    });
-    // const [formIsValid, setFormIsValid] = useState(false);
-    const [isSignup, setIsSignup ] = useState(true);
-    
+    });    
+    const [isSignup, setIsSignup ] = useState(true);    
 
     const inputChangedHandler = (event, controlName) => {       
         const updatedControls = {...controls};
@@ -56,18 +55,14 @@ const Auth = props => {
         updatedControls[controlName] = updatedItem;
         setControls(updatedControls);
     };
-
     
     useEffect(() => {
-        if (props.isAuth) {
-            props.history.push(props.authRedirectPath);
-        };
+        if (isAuth) history.push(authRedirectPath);        
     }); 
 
     const submitHandler = (event) => {
-        event.preventDefault();
-        // const {isSignup, controls: {email, password }} = state;
-        props.onAuth(controls.email.value, controls.password.value, isSignup);
+        event.preventDefault();        
+        onAuth(controls.email.value, controls.password.value, isSignup);
     };
 
     const switchAuthModeHandler = (event) => {
@@ -76,11 +71,10 @@ const Auth = props => {
     };
 
     useEffect(() => {
-        if (!props.building) {
-            props.onSetAuthRedirectPath(props.authRedirectPath);
-        };
-    // eslint-disable-next-line    
-    }, []);    
+        if (!building) {
+            onSetAuthRedirectPath(authRedirectPath);
+        };     
+    }, [building, onSetAuthRedirectPath, authRedirectPath]);    
     
     let form = (
         <form onSubmit={submitHandler}>
@@ -107,22 +101,16 @@ const Auth = props => {
                     </div>
             </form>
     )
-    if (props.loading) {
+    if (loading) {
         form = <Spinner />
     }
     let errorMessage = null;
-    if (props.error) {
-        errorMessage = <h2>{props.error.message.split`_`.join` `}</h2>
+    if (error) {
+        errorMessage = <h2>{error.message.split`_`.join` `}</h2>
     }
-
-    // let authRedirect = props.isAuth ? <Redirect to={props.authRedirectPath} /> : null;
-    // console.log('props.isAuth', props.isAuth);
-    // console.log('authRedirect', authRedirect);
-    // console.log('props.authRedirectPath :', props.authRedirectPath);
-    console.log('this in Auth non-Class:', this);
+    
     return (
-        <div className="Auth">
-            {/* {authRedirect} */}
+        <div className="Auth">            
             <h2>{isSignup.toString()}</h2>
             {errorMessage}
             {form}
@@ -149,31 +137,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));
-
-// checkValidity({validation, value, shouldValidate}) {        
-    //     if (!shouldValidate) return true;
-    //     let isValid = true;
-    //     if (validation.required) {
-    //         isValid = value.trim() !== '' && isValid;            
-    //     }
-        
-    //     if (validation.minLength) {
-    //         isValid = value.length >= validation.minLength && isValid;            
-    //     }
-    //     if (validation.maxLength) {
-    //         isValid = value.length <= validation.maxLength && isValid;            
-    //     }
-        
-    //     if (validation.isEmail) {
-    //         const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    //         isValid = pattern.test(value) && isValid;           
-    //     }
-    //     return isValid;
-    // }
-
-
-    // componentDidUpdate(_, prevState){
-        // const formIsValid = ;        
-        // if (formIsValid !== prevState.formIsValid) {
-        //     setState({formIsValid: formIsValid});
-        // };
