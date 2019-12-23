@@ -1,7 +1,6 @@
 import React from 'react';
 import './OrderSummary.css';
 import Button from '../../UI/Button/';
-// import { Link } from 'react-router-dom';
 
 const OrderSummary = ({order, totalP, cancel, makeAdeal}) => {    
     
