@@ -136,14 +136,9 @@ const ContactData = props => {
         // setFormIsValid(isValid);
         if (props.purchased) props.history.replace('/');
     // eslint-disable-next-line        
-    }, [props.purchased]);
+    }, [props.purchased]);   
+        
     
-    useEffect(() => {
-        console.log('orderForm :', orderForm);
-        // console.log('formIsValid :', formIsValid);
-    });
-    
-    console.log('Contact data render()');
     let form = (
         <>
             <h2>Enter your Contact Data</h2>
