@@ -27,4 +27,5 @@ const Controls = ({ price, ingredientHandler, disabled, canWeOrder, orderNowButt
         </div>
     )
 }
-export default Controls
+
+export default Controls;

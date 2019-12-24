@@ -2,9 +2,7 @@ import React from 'react';
 import './OrderSummary.css';
 import Button from '../../UI/Button/';
 
-const OrderSummary = ({order, totalP, cancel, makeAdeal}) => {    
-    
-
+const OrderSummary = ({ order, totalP, cancel, makeAdeal }) => {
     const summary = Object.keys(order).filter(i => order[i] > 0).map(i => (
         <li key={i}>
             <span style={{textTransform: 'capitalize'}}>{i}</span>: {order[i]}
@@ -18,10 +16,8 @@ const OrderSummary = ({order, totalP, cancel, makeAdeal}) => {
                 {summary}
             </ul>
             <p>Continue to Checkout?</p>
-            <Button btnType="Danger" clicked={cancel}>CANCEL</Button>
-            {/* <Link to="/checkout" exact> */}
-            <Button btnType="Success" clicked={makeAdeal}>CONTINUE</Button>
-            {/* </Link>     */}
+            <Button btnType="Danger" clicked={cancel}>CANCEL</Button>            
+            <Button btnType="Success" clicked={makeAdeal}>CONTINUE</Button>           
         </div>
     )
     
