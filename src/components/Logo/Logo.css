@@ -1,12 +1,9 @@
-.Logo {
-    /* background-color: white; */
+.Logo {    
     display: flex;
     justify-content: center;
     padding: 8px;
     height: 100%;
-    box-sizing: border-box;
-    /* align-items: center; */
-    
+    box-sizing: border-box;    
 }
 
 .Logo img {
