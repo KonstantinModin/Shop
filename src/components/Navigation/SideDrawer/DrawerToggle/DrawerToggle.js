@@ -1,7 +1,7 @@
 import React from 'react';
 import './DrawerToggle.css';
 
-const DrawerToggle = ({onClick}) => {
+const DrawerToggle = ({ onClick }) => {
     return (
         <div className="DrawerToggle" onClick={onClick}>
             <div></div>  

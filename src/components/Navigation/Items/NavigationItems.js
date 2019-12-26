@@ -12,4 +12,5 @@ const NavigationItems = ({ isAuth }) => {
         </nav>
     )
 }
+
 export default NavigationItems;
