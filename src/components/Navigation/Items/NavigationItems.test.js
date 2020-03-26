@@ -1,35 +1,35 @@
-import React from 'react';
+import React from "react";
 
-import { configure, shallow } from  'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { configure, shallow } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 
-import NavigationItems from './NavigationItems';
-import { NavLink } from 'react-router-dom';
+import NavigationItems from "./NavigationItems";
+import { NavLink } from "react-router-dom";
 
+configure({ adapter: new Adapter() });
 
-configure({adapter: new Adapter()});
-
-describe('<Navigation Items />', () => {
+describe("<Navigation Items />", () => {
     let wrapper;
 
     beforeEach(() => {
         wrapper = shallow(<NavigationItems />);
     });
-    
-    it('should render 2 <Navigation Items /> elements if not authenticated', () => {       
+
+    it("should render 2 <Navigation Items /> elements if not authenticated", () => {
         expect(wrapper.find(NavLink)).toHaveLength(2);
     });
 
-    it('should render 3 <Navigation Items /> elements if authenticated', () => {
-        wrapper.setProps({isAuth: true});
+    it("should render 3 <Navigation Items /> elements if authenticated", () => {
+        wrapper.setProps({ isAuth: true });
         expect(wrapper.find(NavLink)).toHaveLength(3);
     });
 
     it('should contain (<NavLink to="/logout">Logout</NavLink>) if authenticated', () => {
-        wrapper.setProps({isAuth: true});
-        expect(wrapper.contains(<NavLink to="/logout">Logout</NavLink>)).toEqual(true);
+        wrapper.setProps({ isAuth: true });
+        expect(
+            wrapper.contains(<NavLink to="/logout">Logout</NavLink>)
+        ).toEqual(true);
     });
-
 });
 
 // describe('<Navigation Items />', () => {
