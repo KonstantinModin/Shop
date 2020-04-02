@@ -8,7 +8,7 @@ import {
     AUTH_CHECK_TIMEOUT,
     AUTH_USER,
     AUTH_CHECK_INITIAL_STATE
-} from './actionTypes';
+} from "./actionTypes";
 // import axios from 'axios';
 
 export const authStart = () => {
@@ -17,7 +17,7 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (data) => {
+export const authSuccess = data => {
     return {
         type: AUTH_SUCCESS,
         payload: {
@@ -27,7 +27,7 @@ export const authSuccess = (data) => {
     };
 };
 
-export const authFail = (error) => {
+export const authFail = error => {
     return {
         type: AUTH_FAIL,
         payload: error
@@ -43,7 +43,7 @@ export const logout = () => {
     };
 };
 
-export const checkAuthTimeout = (expirationTime) => {
+export const checkAuthTimeout = expirationTime => {
     return {
         type: AUTH_CHECK_TIMEOUT,
         expirationTime: expirationTime
@@ -59,7 +59,7 @@ export const auth = (email, password, isSignup) => {
         email,
         password,
         isSignup
-    }
+    };
     // const key = 'AIzaSyCwToRAdwhUS9yZK67hNMtpRs11S37mJ9U';
     // return dispatch => {
     //     dispatch(authStart());
@@ -89,7 +89,7 @@ export const auth = (email, password, isSignup) => {
     // };
 };
 
-export const setAuthRedirectPath = (path) => {
+export const setAuthRedirectPath = path => {
     return {
         type: SET_AUTH_REDIRECT_PATH,
         payload: path
