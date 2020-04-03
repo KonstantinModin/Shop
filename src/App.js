@@ -1,30 +1,30 @@
-import React, { useEffect, Suspense } from 'react';
-import Layout from './components/Layout';
-import Builder from './containers/Builder';
+import React, { useEffect, Suspense } from "react";
+import Layout from "./components/Layout";
+import Builder from "./containers/Builder";
 // import Checkout from './containers/Checkout';
-import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Route, withRouter, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 // import Orders from './containers/Orders';
 // import Auth from './containers/Auth';
-import Logout from './containers/Auth/Logout';
-import { authCheckState } from './store/actions';
+import Logout from "./containers/Auth/Logout";
+import { authCheckState } from "./store/actions";
 // import asyncComponent from './hoc/asyncComponent';  //// LAZY LOADING
 
-
-const asyncCheckout = React.lazy(() => { //// LAZY LOADING
-    return import('./containers/Checkout');  //// LAZY LOADING
+const asyncCheckout = React.lazy(() => {
+    //// LAZY LOADING
+    return import("./containers/Checkout"); //// LAZY LOADING
 });
-const asyncOrders = React.lazy(() => {   //// LAZY LOADING
-    return import('./containers/Orders');    //// LAZY LOADING
+const asyncOrders = React.lazy(() => {
+    //// LAZY LOADING
+    return import("./containers/Orders"); //// LAZY LOADING
 });
-const asyncAuth = React.lazy(() => import('./containers/Auth'));
+const asyncAuth = React.lazy(() => import("./containers/Auth"));
 
 const App = ({ onTryAutoSignup, isAuth }) => {
-    
     useEffect(() => {
-        onTryAutoSignup();        
-    }, [ onTryAutoSignup ]);   
-    
+        onTryAutoSignup();
+    }, [onTryAutoSignup]);
+
     let routes = (
         <Switch>
             <Route path="/auth" component={asyncAuth} />
@@ -43,24 +43,21 @@ const App = ({ onTryAutoSignup, isAuth }) => {
                 <Route path="/" exact component={Builder} />
                 <Redirect to="/" />
             </Switch>
-        )
-    };
-    
+        );
+    }
+
     return (
         <div className="App">
-            <Layout> 
+            <Layout>
                 {/* <Route path="/" exact component={Builder} />
                 <Route path="/auth" component={Auth} />                
                 <Route path="/checkout" component={Checkout} />
                 <Route path="/logout" component={Logout} />
                 <Route path="/orders" component={Orders} /> */}
-                <Suspense fallback={<h2>Loading ...</h2>}>
-                    {routes}
-                </Suspense>
-            </Layout>        
+                <Suspense fallback={<h2>Loading ...</h2>}>{routes}</Suspense>
+            </Layout>
         </div>
     );
-    
 };
 
 const mapStateToProps = state => {
